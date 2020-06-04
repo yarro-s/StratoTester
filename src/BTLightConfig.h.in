@@ -1,0 +1,3 @@
+// the configured options and settings for BTLight
+#define BTLight_VERSION_MAJOR @BTLight_VERSION_MAJOR@
+#define BTLight_VERSION_MINOR @BTLight_VERSION_MINOR@
