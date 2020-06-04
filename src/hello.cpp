@@ -10,10 +10,11 @@ int main(int argc, char **argv)
         std::cout << argv[0] << "Hello Sayer Version "
                   << BTLight_VERSION_MAJOR << "."
                   << BTLight_VERSION_MINOR << std::endl;
-        std::cout << "Usage: " << argv[0] << " name" << std::endl;
-        return 1;
+        std::cout << "Program Usage: " << argv[0] << " name" << std::endl;
     }
-
-    std::cout << "Hello " << argv[1] << "!!!" << std::endl;
+    else
+    {
+        std::cout << "Hello " << argv[1] << "!!!" << std::endl;
+    }
     return 0;
 }
