@@ -37,3 +37,6 @@ build/CMakeFiles/BTLight.dir/progress.make
 build/CMakeFiles/BTLight.dir/src/hello.cpp.o
 build/src/BTLightConfig.h
 .vscode/settings.json
+build/.DS_Store
+build/.cmake/api/v1/reply/index-2020-06-04T13-15-58-0548.json
+.DS_Store
