@@ -1,20 +1,13 @@
-#include <iostream>
-#include "BTLightConfig.h"
+#define CATCH_CONFIG_MAIN  
+#include "../lib/Catch2/catch.hpp"
 
+unsigned int Factorial( unsigned int number ) {
+    return number <= 1 ? number : Factorial(number-1)*number;
+}
 
-int main(int argc, char **argv)
-{
-    if (argc < 2)
-    {
-        // report version
-        std::cout << argv[0] << "Hello Sayer Version "
-                  << BTLight_VERSION_MAJOR << "."
-                  << BTLight_VERSION_MINOR << std::endl;
-        std::cout << "Program Usage: " << argv[0] << " name" << std::endl;
-    }
-    else
-    {
-        std::cout << "Hello " << argv[1] << "!!!" << std::endl;
-    }
-    return 0;
+TEST_CASE( "Factorials are computed", "[factorial]" ) {
+    REQUIRE( Factorial(1) == 1 );
+    REQUIRE( Factorial(2) == 2 );
+    REQUIRE( Factorial(3) == 6 );
+    REQUIRE( Factorial(10) == 3628800 );
 }
