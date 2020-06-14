@@ -7,14 +7,32 @@ namespace bt
     class single_asset : public backtest
     {
     private:
-        const price_t &pT;
+        price_t pT;
+        price const cash_deposit;
 
-        price_t pvT;
+        result res;
 
     public:
-        BTResult run(asset_alloc& a_alloc);
+        result const &results()
+        {
+            return res;
+        }
 
-        single_asset(const price_t &pT) : pT(pT) {}
+        timed_result results(time_frame tf)
+        {
+            return timed_result(res, tf);
+        }
+
+        single_asset &run(asset_alloc &a_alloc);
+
+        single_asset(const price_t &pT)
+            : single_asset(pT, 1.0e18) {}
+
+        single_asset(const price_t &pT,
+                     price initial_deposit)
+            : pT(pT),
+              cash_deposit(initial_deposit) {}
+
         ~single_asset() {}
     };
 } // namespace bt

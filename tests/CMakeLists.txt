@@ -1,18 +1,7 @@
-cmake_minimum_required(VERSION 3.10)
+add_executable (Test test_main.cpp test_utils.cpp single_asset_test.cpp t_series_test.cpp test_result.cpp 
+asset_alloc_test.cpp integration_test.cpp)
 
-# set the project name
-project(BTLight VERSION 1.0)
+target_include_directories (Test PUBLIC ../inc)
+target_include_directories (Test PUBLIC ../lib)
 
-# specify the C++ standard
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-
-configure_file(src/BTLightConfig.h.in src/BTLightConfig.h)
-
-# add the test
-add_subdirectory(libs/Catch2)
-target_link_libraries(tests Catch2::Catch2)
-
-target_include_directories(BTLight PUBLIC
-                           "${PROJECT_BINARY_DIR}"
-                           )
+target_link_libraries (Test BTLight)

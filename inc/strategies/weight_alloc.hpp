@@ -1,6 +1,10 @@
 #pragma once
-#include <asset_alloc.hpp>
+
 #include <vector>
+#include <asset_alloc.hpp>
+
+#include <iostream>
+#include <utils.hpp>
 
 namespace bt
 {
@@ -10,10 +14,12 @@ namespace bt
         const weight_t &wT;
 
     public:
-        weight on_hist(const price_t &pT)
+        weight algo(const price_t &pT)
         {
             const unsigned idxT = 
-                pT.size() % wT.size();
+                (pT.size()-1) % wT.size();
+
+            // std::cout << std::endl << ">>PT: " << ts_to_str(pT) << " => " << wT[idxT] << std::endl;
             return wT[idxT];
         }
 

@@ -1,20 +1,23 @@
+#include <math.h>
 #include <single_asset.hpp>
 
 #include <iostream>
+// #include <utils.hpp>
 
 namespace bt
 {
-    BTResult single_asset::run(asset_alloc &a_alloc)
+    single_asset &single_asset::run(
+        asset_alloc &a_alloc)
     {
+        res = result(cash_deposit);
+
         for (auto p = pT.begin(); p != pT.end(); ++p)
         {
-            const auto &roll_wnd = price_t(pT.begin(), p);
-            const auto wT = a_alloc.on_hist(roll_wnd);
-            const double vT = (*p) * wT;
+            auto const &roll_wnd = price_t(pT.begin(), p+1);
+            auto const w = a_alloc.on_hist(roll_wnd);
 
-            pvT.push_back(vT);
+            res = res.update_pv(*p, w);
         }
-
-        return BTResult(pvT);
+        return *this;
     }
 } // namespace bt
