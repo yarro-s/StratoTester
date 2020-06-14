@@ -21,7 +21,7 @@ TEST_CASE("Backtest complete workflow", "[backtest]")
         return pT.back() > sma ? 1.0 : -1.0;
     };
 
-    SECTION("short price data is loaded and processed")
+    /*SECTION("short price data is loaded and processed")
     {
         // std::cout << std::endl
         //           << "---\nINTEGRATION "
@@ -53,7 +53,7 @@ TEST_CASE("Backtest complete workflow", "[backtest]")
         // TO DO: cross-check with Python bt
         auto const growth_expected = 0.584; 
         CHECK(res.growth() == Approx(growth_expected));
-   }
+   }*/
 
     SECTION("prices are loaded and processed")
     {

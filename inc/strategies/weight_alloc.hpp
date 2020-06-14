@@ -16,7 +16,7 @@ namespace bt
     public:
         weight algo(const price_t &pT)
         {
-            const unsigned idxT = 
+            size_t idxT = 
                 (pT.size()-1) % wT.size();
 
             // std::cout << std::endl << ">>PT: " << ts_to_str(pT) << " => " << wT[idxT] << std::endl;

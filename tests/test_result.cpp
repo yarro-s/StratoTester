@@ -12,6 +12,21 @@ TEST_CASE( "4: Backtest result test", "[multi-file:4]" )
     auto const &wT = bt::weight_t{
             1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
 
+    SECTION( "One peak and small trough" )
+    {
+        auto const &pT = bt::price_t{
+            90, 150, 130, 250, 120, 180};
+
+        auto back_test = bt::single_asset(pT);
+        auto strat = bt::weight_alloc(wT);
+        auto const &res = back_test.run(strat).results();
+
+        auto const max_dd_expected = -0.52;
+
+        REQUIRE(res.max_drawdown() ==
+              Approx(max_dd_expected));
+    }
+
     SECTION( "One peak" )
     {
         auto const &pT = bt::price_t{
@@ -23,7 +38,6 @@ TEST_CASE( "4: Backtest result test", "[multi-file:4]" )
 
         auto const max_dd_expected = -0.68;
 
-        // std::cout << ":" << bt::ts_to_str(res.pvT) << std::endl;
         REQUIRE(res.max_drawdown() ==
               Approx(max_dd_expected));
     }

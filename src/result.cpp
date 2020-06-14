@@ -1,5 +1,6 @@
 #include <limits>
 #include <algorithm>
+#include <numeric>
 #include <result.hpp>
 
 #include <iostream>
@@ -45,39 +46,27 @@ namespace bt
 
     price result::max_drawdown() const
     {
-        auto const global_peak = 
-            std::max_element(pvT.begin(), pvT.end());
-        auto const right_trough =
-            std::min_element(global_peak, pvT.end());
-        auto const left_trough =
-            std::min_element(pvT.begin(), global_peak);
+        price max_dd = 0.0,
+              gmax = 0.0,
+              gmin = 0.0;
 
-        price max_dd = 0.0;
-
-        if (*left_trough > *right_trough)
+        for (auto pv0 = pvT.begin();
+             pv0 != pvT.end() - 1; ++pv0)
         {
-            max_dd = -(*global_peak - *right_trough) 
-                        / (*global_peak);
+            for (auto pv1 = pv0 + 1;
+                 pv1 != pvT.end(); ++pv1)
+            {
+                auto const loc_dd = *pv0 - *pv1;
 
-            // std::cout << "\nG: " << *left_trough << " / "
-            //           << *global_peak << " \\ " << *right_trough
-            //           << std::endl;
+                if (loc_dd > max_dd)
+                {
+                    max_dd = loc_dd;
+                    gmax = *pv0;
+                    gmin = *pv1;
+                }
+            }
         }
-        else if (*left_trough < *right_trough)
-        {
-            auto const loc_peak = 
-                std::max_element(pvT.begin(), global_peak);
-            auto const loc_trough = 
-                std::min_element(loc_peak, global_peak);
-
-            max_dd = -(*loc_peak - *loc_trough) 
-                        / (*loc_peak);
-
-            // std::cout << "\nL: " << *left_trough << " / "
-            //           << *loc_peak << " \\ " << *loc_trough
-            //           << std::endl;
-        }  
-         
-        return max_dd;
+        
+        return gmax == gmin ? 0.0 : -(gmax - gmin)/gmax;
     }
 } // namespace bt
