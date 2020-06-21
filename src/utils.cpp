@@ -2,21 +2,30 @@
 
 namespace bt
 {
+    std::string str_rep(balance_book &book)
+    {
+        std::stringstream rep;
+
+        rep << book.cash() << " & " << book.n_asset();
+
+        return rep.str();
+    }
+
     std::string str_rep(t_series<double> const &ts)
     {
         std::stringstream rep;
 
         auto const t_stamp_to_str =
-            [](std::time_t const &t_stamp) {
-                struct tm *timeinfo;
-                size_t const n_t = 9;
-                char buffer[9];
+        [](std::time_t const &t_stamp) {
+            struct tm *timeinfo;
+            size_t const n_t = 9;
+            char buffer[9];
 
-                timeinfo = localtime(&t_stamp);
-                strftime(buffer, n_t, "%D", timeinfo);
+            timeinfo = localtime(&t_stamp);
+            strftime(buffer, n_t, "%D", timeinfo);
 
-                return std::string(buffer);
-            };
+            return std::string(buffer);
+        };
 
         rep << "         ";
 

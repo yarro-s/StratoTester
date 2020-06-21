@@ -1,100 +1,69 @@
 #include <iostream>
-#include <sstream>
+#include <vector>
 #include <unistd.h>
 #include <BTLight.hpp>
 
 #include <csv.h>
 
-/*
-
-class rep_ts
-    : public bt::representer<bt::t_series<double>>
+namespace bt
 {
-protected:
-    std::string get_rep(
-        bt::t_series<double> &ts) const override
+    typedef struct
     {
-        std::stringstream rep;
+        long idx;
+        price price;
+        int dir;
+        unsigned vol;
+        bt::price cash_left;
+    } position;
 
-        rep << "         ";
-
-        for (auto const &tckr : ts.tickers)
-        {
-            rep << tckr << "   ";
-        }
-        rep << std::endl;
-
-        for (auto t_stamp = ts.t_stamps.begin();
-             t_stamp != ts.t_stamps.end(); ++t_stamp)
-        {
-            auto const idXT = std::distance(
-                ts.t_stamps.begin(), t_stamp);
-
-            rep << t_stamp_to_str(*t_stamp);
-
-            for (auto const &tckr : ts.tickers)
-            {
-                rep << " " << ts.vals[tckr].at(idXT);
-            }
-
-            rep << std::endl;
-        }
-        return rep.str();
-    }
-public:
-    rep_ts() {};
-    ~rep_ts() {};
-
-private:
-    std::string t_stamp_to_str(
-        std::time_t const &t_stamp) const
+    std::string str_rep(position pos)
     {
-        struct tm *timeinfo;
-        size_t const n_t = 9;
-        char buffer[9];
+        std::ostringstream ss;
 
-        timeinfo = localtime(&t_stamp);
-        strftime(buffer, n_t, "%D", timeinfo);
+        ss << "@[ " << pos.idx << " ]" << "   "
+           << "P = " << pos.price << "   "
+           << "V = " << pos.dir * 
+                static_cast<long>(pos.vol) << "   ";
 
-        return std::string(buffer);
+        return ss.str();
     }
-};
-
-*/
+} // namespace bt
 
 int main()
 {
-    char buff[FILENAME_MAX];
-    getcwd(buff, FILENAME_MAX);
-    std::cout << std::endl
-              << "CWD: " << buff
-              << std::endl
-              << std::endl;
+    bt::price_t pT  = 
+        {10.0, 15.0, 12.0, 20.0, 22.0, 18.0, 35.0};
+    std::vector<int> trdT = 
+        {   0,    1,    0,    0,   -1,    0,    0};
+    std::vector<unsigned> volT = 
+        {   0,   10,    0,    0,   10,    0,    0};
+    bt::price cash = 200.0;
 
-    io::CSVReader<4, io::trim_chars<>>
-        in("csv_scratchbook.csv");
-    in.read_header(io::ignore_extra_column,
-                   "Date", "A", "T", "IBM");
+    auto const tr_exp = 270.0 / 200.0;
 
-    bt::t_series<bt::price> ts;
+    std::cout << "EXP TR: "                   // = 1.46667
+              << tr_exp << std::endl;
 
-    std::string date;
-    struct tm date_tm = (const struct tm){0};
-    bt::price A, T, IBM;
+    // algo
+    std::vector<bt::position> posT;
 
-    while (in.read_row(date, A, T, IBM))
+    for (auto p = pT.begin(); p != pT.end(); ++p)
     {
-        strptime(date.c_str(), "%D", &date_tm);
-        auto const t_stamp = mktime(&date_tm);
+        auto const idx = std::distance(pT.begin(), p);
+        auto const trd = trdT[idx];
 
-        ts.append_at("A", t_stamp, A);
-        ts.append_at("T", t_stamp, T);
-        ts.append_at("IBM", t_stamp, IBM);
+        if (trd != 0)
+        {
+            auto const vol = volT[idx];
+            posT.push_back({idx, *p, trd, vol});
+        }
     }
 
-    std::cout << std::endl
-              << "TS: " << std::endl
-              << bt::str_rep(ts) << std::endl;
+    for (auto const &pos : posT)
+    {
+        std::cout << " >>> " << bt::str_rep(pos)
+                  << std::endl;
+    }
 
     return 0;
 }
