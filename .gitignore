@@ -1,2 +1,12 @@
 build/
 .vscode/
+lib/
+lib/.DS_Store
+tests/data/.DS_Store
+tests/.DS_Store
+src/.DS_Store
+.DS_Store
+.gitignore
+lib/.DS_Store
+
+.DS_Store
