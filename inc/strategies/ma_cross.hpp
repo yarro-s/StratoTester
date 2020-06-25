@@ -1,11 +1,12 @@
 #pragma once
 
-#include <vector>
-#include <numeric>
-#include <iostream>
+#ifndef _HEAD_BLOCK
+#include <deps.h>
+#endif
 
 #include <asset_alloc.hpp>
 #include <utils.hpp>
+
 
 namespace bt
 {

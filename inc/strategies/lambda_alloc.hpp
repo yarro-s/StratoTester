@@ -4,26 +4,31 @@
 #include <deps.h>
 #endif
 
-#include <unit_defs.hpp>
+#include <asset_alloc.hpp>
 
 
 namespace bt
 {
-    class asset_alloc
+    using algo_lambda = 
+        std::function<weight(price_t const &)>;
+
+    class lambda_alloc : asset_alloc
     {
+    private:
+        std::function<weight(price_t)> const fa;
+
     public:
-        virtual weight algo(price_t const &price_hist) = 0;
-
-        virtual weight on_hist(const price_t &price_hist)
+        virtual weight algo(price_t const &price_hist)
         {
-            auto const w = algo(price_hist);
-            
-            // clamp to 0...1
-            auto const w_hi = 1.0, w_lo = -1.0;
-
-            return w >= w_lo && w <= w_hi 
-                ? w : (w > w_hi ? w_hi : w_lo);
+            return fa(price_hist);
         }
+
+        lambda_alloc()
+            : fa([](price_t const &pT) { 
+                std::cout << "DEFAULT ALGO LAMBDA!" << std::endl;
+                return 0.0; }) {}
+
+        lambda_alloc(algo_lambda fa) : fa(fa) {}
     };
 
     class asset_alloc_lb : public asset_alloc
@@ -51,5 +56,11 @@ namespace bt
         }
 
         asset_alloc_lb(size_t n_lback) : n_lback(n_lback) {}
+
+        asset_alloc_lb(size_t n_lback, algo_lambda fa)
+            : asset_alloc::asset_alloc(fa),
+              n_lback(n_lback) {}
+
+        ~asset_alloc_lb() {}
     };
 } // namespace bt

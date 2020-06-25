@@ -2,6 +2,7 @@
 
 #include <asset_alloc.hpp>
 
+
 namespace bt
 {
     class random_alloc : public asset_alloc

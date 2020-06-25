@@ -1,18 +1,29 @@
 #pragma once
-#include <unit_defs.hpp>
+
 #include <backtest.hpp>
+#include <asset_alloc.hpp>
+#include <balance_book.hpp>
+#include <result.hpp>
+
 
 namespace bt
 {
     class single_asset : public backtest
     {
     private:
-        price_t pT;
-        price const cash_deposit;
-
         result res;
+        balance_book book;
+        asset_alloc &a_alloc;
+
+        size_t rb_period = 1;
 
     public:
+        single_asset rebalance_every(size_t period)
+        {
+            rb_period = period;
+            return *this;
+        }
+
         result const &results()
         {
             return res;
@@ -23,16 +34,16 @@ namespace bt
             return timed_result(res, tf);
         }
 
-        single_asset &run(asset_alloc &a_alloc);
+        single_asset &update(price px, weight w);
+        single_asset &run(price_t pT);
 
-        single_asset(const price_t &pT)
-            : single_asset(pT, 1.0e18) {}
+        single_asset(asset_alloc &a_alloc)
+            : single_asset(a_alloc, 1.0e18) {}
 
-        single_asset(const price_t &pT,
+        single_asset(asset_alloc &a_alloc,
                      price initial_deposit)
-            : pT(pT),
-              cash_deposit(initial_deposit) {}
-
-        ~single_asset() {}
+            : a_alloc(a_alloc),
+              book(initial_deposit) {}
     };
 } // namespace bt
+

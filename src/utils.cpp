@@ -1,4 +1,7 @@
+#ifndef _SRC_BLOCK
 #include <utils.hpp>
+#endif
+
 
 namespace bt
 {
@@ -72,3 +75,4 @@ namespace bt
     }
 
 } // namespace bt
+

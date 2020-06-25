@@ -1,7 +1,9 @@
 #pragma once
-#include <vector>
-#include <chrono>
-#include <string>
+
+#ifndef _HEAD_BLOCK
+#include <deps.h>
+#endif
+
 
 namespace bt
 {
@@ -28,3 +30,4 @@ namespace bt
         auto constexpr year = 52 * week;
     } // namespace tf
 } // namespace bt
+

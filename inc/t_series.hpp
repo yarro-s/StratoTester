@@ -1,14 +1,11 @@
 #pragma once
 
-#include <vector>
-#include <set>
-#include <string>
-#include <unordered_map>
-#include <ctime>
-#include <sstream>
+#ifndef _HEAD_BLOCK
+#include <deps.h>
+#endif
+
 #include <unit_defs.hpp>
 
-#include <iostream>
 
 namespace bt
 {
@@ -65,3 +62,4 @@ namespace bt
         ~t_series(){};
     };
 } // namespace bt
+

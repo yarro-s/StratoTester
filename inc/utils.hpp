@@ -1,9 +1,13 @@
 #pragma once
 
-#include <string>
+#ifndef _HEAD_BLOCK
+#include <deps.h>
+#endif
+
 #include <t_series.hpp>
 #include <balance_book.hpp>
 #include <unit_defs.hpp>
+
 
 namespace bt
 {
@@ -13,3 +17,4 @@ namespace bt
 
     std::string ts_to_str(const price_t &sT);
 } // namespace bt
+
