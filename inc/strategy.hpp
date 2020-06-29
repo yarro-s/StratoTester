@@ -1,3 +1,9 @@
+#pragma once
+
+#ifndef _HEAD_BLOCK
+#include <memory>
+#endif
+
 #include <asset_alloc.hpp>
 #include <asset_alloc_lb.hpp>
 #include <asset_alloc_rb.hpp>

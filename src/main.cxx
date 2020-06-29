@@ -21,7 +21,7 @@ int main()
 
     // auto base_strat = bt::weight_alloc(wT);
     auto strat = bt::strategy(new bt::weight_alloc(wT)).lookback(3)
-        .rebalance_every(4);
+        .rebalance_every(2);
 
     // bt::weight_alloc strat0(wT);
     // bt::asset_alloc_lb strat1(strat0, 3);
