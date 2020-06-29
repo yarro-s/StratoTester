@@ -1,4 +1,4 @@
-add_executable (BTLightMain main.mm)
+add_executable (BTLightMain main.cxx)
 add_library (BTLight 
     single_asset.cpp 
     utils.cpp 

@@ -35,7 +35,7 @@ namespace bt
         }
 
         single_asset &update(price px, weight w);
-        single_asset &run(price_t pT);
+        single_asset &run(price_t const &pT);
 
         single_asset(asset_alloc &a_alloc)
             : single_asset(a_alloc, 1.0e18) {}

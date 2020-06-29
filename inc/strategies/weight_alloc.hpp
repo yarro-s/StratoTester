@@ -21,7 +21,7 @@ namespace bt
             size_t idxT = 
                 (pT.size()-1) % wT.size();
             
-            // std::cout << std::endl << ">>PT: " << ts_to_str(pT) << " => " << wT[idxT] << std::endl;
+            std::cout << std::endl << ">>W PT: " << ts_to_str(pT) << " => " << wT[idxT] << std::endl;
             return wT[idxT];
         }
 

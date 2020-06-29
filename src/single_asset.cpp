@@ -21,15 +21,15 @@ namespace bt
         auto const amount = abs(n_asset_diff);
 
         book.mkt_price(px);
-        // std::cout << std::endl << 
-        //     "MKT VAL: " << book.mkt_value() << "   "
-        //     "PX:" << px << "   "
-        //     "W: " << w << "   "
-        //     "VAL REQ: " << asset_value_req << "   "
-        //     "N REQ: " << n_asset_req << "   "
-        //     "TRADE DEC: " << n_asset_diff << "   "
-        //     "N ASSET: " << book.n_asset() << 
-        //     std::endl; 
+        /* std::cout << std::endl << 
+            "MKT VAL: " << book.mkt_value() << "   "
+            "PX:" << px << "   "
+            "W: " << w << "   "
+            "VAL REQ: " << asset_value_req << "   "
+            "N REQ: " << n_asset_req << "   "
+            "TRADE DEC: " << n_asset_diff << "   "
+            "N ASSET: " << book.n_asset() << 
+            std::endl; */
 
         if (n_asset_diff > 0)
         {
@@ -42,7 +42,7 @@ namespace bt
         return *this;
     }
  
-    single_asset &single_asset::run(price_t pT)
+    single_asset &single_asset::run(price_t const &pT)
     {
         weight w = 0.0;
         for (auto p = pT.begin(); p != pT.end(); ++p)
@@ -50,15 +50,11 @@ namespace bt
             auto const idxT = std::distance(pT.begin(), p);
             if (idxT % rb_period == 0)
             {   
-                // std::cout << std::endl << "w : " << w;
-                // std::cout << std::endl << "p : " << *p;
                 update(*p, w);
                 res.save(book);
             }
 
-            auto const &roll_wnd = price_t(pT.begin(), p+1);
-            // std::cout << std::endl
-            //           << "rwT: " << *pT.begin() << " -- " << *(p+1);
+            auto const &roll_wnd = price_t(pT.begin(), p+1);     
             w = a_alloc.on_hist(roll_wnd);
         }
         return *this;

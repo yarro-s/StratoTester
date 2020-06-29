@@ -10,7 +10,7 @@ namespace bt
 
     public:
         virtual backtest &update(price px, weight w) = 0;
-        virtual backtest &run(price_t pT) = 0;
+        virtual backtest &run(price_t const &pT) = 0;
     };
 }
 
