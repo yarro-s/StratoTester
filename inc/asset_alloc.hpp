@@ -24,5 +24,7 @@ namespace bt
             return w >= w_lo && w <= w_hi 
                 ? w : (w > w_hi ? w_hi : w_lo);
         }
+
+        virtual ~asset_alloc() {}
     };
 } // namespace bt

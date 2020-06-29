@@ -29,7 +29,9 @@ namespace bt
 
             if (!(price_hist.size() % m_rebalance))
             {
-                std::cout << std::endl << "  REBALANCING...";
+                std::cout << std::endl
+                          << "  REBALANCING M = "
+                          << price_hist.size() << " ...";
                 wT = a_alloc.on_hist(price_hist);
             }
             // std::cout << " wT > : " << wT << std::endl; 
@@ -38,5 +40,7 @@ namespace bt
 
         asset_alloc_rb(asset_alloc& a_alloc, size_t m) 
             : a_alloc(a_alloc), m_rebalance(m) {}
+        
+        ~asset_alloc_rb() {}
     };
 } // namespace bt

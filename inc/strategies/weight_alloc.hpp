@@ -26,6 +26,8 @@ namespace bt
         }
 
         weight_alloc(weight_t const &wT) : wT(wT){};
+
+        ~weight_alloc() {}
     };
 } // namespace bt
 

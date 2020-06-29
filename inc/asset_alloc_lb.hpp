@@ -30,11 +30,13 @@ namespace bt
 
             if (len_passed >= n_lback)
             {
-                auto const lb_slice = price_t(
-                    price_hist.end()-n_lback, 
-                    price_hist.end());
-                std::cout << std::endl << "  LOOKING BACK...";
-                wT = a_alloc.on_hist(lb_slice);
+                auto const t0 = price_hist.end()-n_lback;
+                auto const t_now = price_hist.end();
+
+                std::cout << std::endl
+                          << "  LOOKING BACK N = "
+                          << std::distance(t0, t_now) << " ...";
+                wT = a_alloc.on_hist(price_t(t0, t_now));
             }
             // std::cout << " wT > : " << wT << std::endl; 
             return wT; 
@@ -42,5 +44,7 @@ namespace bt
 
         asset_alloc_lb(asset_alloc& a_alloc, size_t n) 
             : a_alloc(a_alloc), n_lback(n) {}
+
+        ~asset_alloc_lb() {}
     };
 } // namespace bt
