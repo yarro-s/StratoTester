@@ -10,11 +10,12 @@
 
 namespace bt 
 {
+    template <typename S>
     class strategy : public asset_alloc
     {
     private:
-        asset_alloc *strat;
-    
+        S strat;
+        
     protected:
         weight algo(price_t const &price_hist) override 
         {
@@ -22,24 +23,23 @@ namespace bt
         }
 
     public:
-        strategy &rebalance_every(size_t m) 
+        strategy<asset_alloc_rb> rebalance_every(size_t m) 
         {
-            strat = new strategy(new asset_alloc_rb(*strat, m));
-            return *this;
+            return strategy<asset_alloc_rb>(strat, m);
         }
 
-        strategy &lookback(size_t n) 
+        strategy<asset_alloc_lb> lookback(size_t n) 
         {
-            strat = new strategy(new asset_alloc_lb(*strat, n));
-            return *this;
+            return strategy<asset_alloc_lb>(strat, n);
         }
 
         virtual weight on_hist(price_t const &price_hist) override
         {
-            return strat->on_hist(price_hist);
+            return strat.on_hist(price_hist);
         }
 
-        strategy(asset_alloc *a_alloc)
-            : strat(a_alloc) {}
+        template <class... Args>
+        strategy(Args&&... args)
+            : strat(args...) {}
     };
 }
