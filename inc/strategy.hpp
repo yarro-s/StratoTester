@@ -7,6 +7,7 @@
 #include <asset_alloc.hpp>
 #include <asset_alloc_lb.hpp>
 #include <asset_alloc_rb.hpp>
+#include <strategies/lambda_alloc.hpp>
 
 namespace bt 
 {
@@ -18,6 +19,18 @@ namespace bt
 
         strategy<asset_alloc_rb> _filter_lb(
             asset_alloc_lb &with_lb, size_t m)
+        {
+            return strategy<asset_alloc_rb>(with_lb, m);
+        }
+
+        strategy<asset_alloc_rb> _filter_lb(
+            weight_alloc &with_lb, size_t m)
+        {
+            return strategy<asset_alloc_rb>(with_lb, m);
+        }
+
+        strategy<asset_alloc_rb> _filter_lb(
+            lambda_alloc &with_lb, size_t m)
         {
             return strategy<asset_alloc_rb>(with_lb, m);
         }
