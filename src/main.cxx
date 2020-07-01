@@ -20,7 +20,7 @@ int main()
          0.7,  0.5,  0.5, 0.9,  0.9,  0.3,  0.0,  0.0,  0.0};
 
     auto strat = bt::strategy<bt::weight_alloc>(wT)
-        .lookback(3).rebalance_every(2);
+        .lookback(4).rebalance_every(2);
 
     bt::single_asset back_test(strat);
     auto const &res = back_test.run(pT);

@@ -5,6 +5,7 @@
 #endif
 
 #include <unit_defs.hpp>
+#include <utils.hpp>
 
 
 namespace bt

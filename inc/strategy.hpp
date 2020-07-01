@@ -15,7 +15,13 @@ namespace bt
     {
     private:
         S strat;
-        
+
+        strategy<asset_alloc_rb> _filter_lb(
+            asset_alloc_lb &with_lb, size_t m)
+        {
+            return strategy<asset_alloc_rb>(with_lb, m);
+        }
+
     protected:
         weight algo(price_t const &price_hist) override 
         {
@@ -25,7 +31,7 @@ namespace bt
     public:
         strategy<asset_alloc_rb> rebalance_every(size_t m) 
         {
-            return strategy<asset_alloc_rb>(strat, m);
+            return _filter_lb(strat, m);
         }
 
         strategy<asset_alloc_lb> lookback(size_t n) 
@@ -39,7 +45,7 @@ namespace bt
         }
 
         template <class... Args>
-        strategy(Args&&... args)
+        strategy(Args&... args)
             : strat(args...) {}
     };
 }

@@ -6,6 +6,7 @@
 
 #include <asset_alloc.hpp>
 #include <unit_defs.hpp>
+#include <utils.hpp>
 
 
 namespace bt
@@ -14,7 +15,7 @@ namespace bt
     {
     private:
         asset_alloc &a_alloc;
-        size_t m_rebalance;
+        size_t m_rbalance;
 
     protected:
         weight algo(price_t const &price_hist) override 
@@ -27,19 +28,19 @@ namespace bt
         {
             weight wT = 0.0;
 
-            if (!(price_hist.size() % m_rebalance))
+            if (!(price_hist.size() % m_rbalance))
             {
                 std::cout << std::endl
                           << "  REBALANCING M = "
                           << price_hist.size() << " ...";
                 wT = a_alloc.on_hist(price_hist);
             }
-            // std::cout << " wT > : " << wT << std::endl; 
+
             return wT; 
         }
 
         asset_alloc_rb(asset_alloc& a_alloc, size_t m) 
-            : a_alloc(a_alloc), m_rebalance(m) {}
+            : a_alloc(a_alloc), m_rbalance(m) {}
         
         ~asset_alloc_rb() {}
     };

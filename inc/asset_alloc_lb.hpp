@@ -38,7 +38,7 @@ namespace bt
                           << std::distance(t0, t_now) << " ...";
                 wT = a_alloc.on_hist(price_t(t0, t_now));
             }
-            // std::cout << " wT > : " << wT << std::endl; 
+
             return wT; 
         }
 
