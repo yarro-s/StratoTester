@@ -17,22 +17,13 @@ namespace bt
     private:
         S strat;
 
-        strategy<asset_alloc_rb> _filter_lb(
-            asset_alloc_lb &with_lb, size_t m)
+        ///
+        template <typename U>
+        strategy<asset_alloc_lb> _filter_rb(U &strat, size_t n)
         {
-            return strategy<asset_alloc_rb>(with_lb, m);
-        }
-
-        strategy<asset_alloc_rb> _filter_lb(
-            weight_alloc &with_lb, size_t m)
-        {
-            return strategy<asset_alloc_rb>(with_lb, m);
-        }
-
-        strategy<asset_alloc_rb> _filter_lb(
-            lambda_alloc &with_lb, size_t m)
-        {
-            return strategy<asset_alloc_rb>(with_lb, m);
+            static_assert(!std::is_same<U, asset_alloc_rb>::value,
+                          "Specify lookback before rebalancing");
+            return strategy<asset_alloc_lb>(strat, n);
         }
 
     protected:
@@ -44,12 +35,12 @@ namespace bt
     public:
         strategy<asset_alloc_rb> rebalance_every(size_t m) 
         {
-            return _filter_lb(strat, m);
+            return strategy<asset_alloc_rb>(strat, m);
         }
 
         strategy<asset_alloc_lb> lookback(size_t n) 
         {
-            return strategy<asset_alloc_lb>(strat, n);
+            return _filter_rb(strat, n); // except rb !
         }
 
         virtual weight on_hist(price_t const &price_hist) override
@@ -58,7 +49,7 @@ namespace bt
         }
 
         template <class... Args>
-        strategy(Args&... args)
+        strategy(Args&&... args)
             : strat(args...) {}
     };
 }
