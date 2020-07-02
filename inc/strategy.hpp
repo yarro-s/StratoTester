@@ -17,7 +17,6 @@ namespace bt
     private:
         S strat;
 
-        ///
         template <typename U>
         strategy<asset_alloc_lb> _filter_rb(U &strat, size_t n)
         {
@@ -40,7 +39,7 @@ namespace bt
 
         strategy<asset_alloc_lb> lookback(size_t n) 
         {
-            return _filter_rb(strat, n); // except rb !
+            return _filter_rb(strat, n);    // except rb 
         }
 
         virtual weight on_hist(price_t const &price_hist) override
