@@ -56,7 +56,11 @@ namespace bt
         return rep.str();
     }
 
-    std::string ts_to_str(const price_t &sT)
+    std::string str_rep(const price_t &sT) {
+        return ts_to_str(sT);
+    }
+
+    std::string ts_to_str(const price_t &sT) // deprecated
     {
         std::ostringstream ss;
         ss << '[';

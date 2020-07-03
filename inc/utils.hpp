@@ -15,6 +15,8 @@ namespace bt
 
     std::string str_rep(t_series<double> const &ts);
 
+    std::string str_rep(const price_t &sT);
+
     std::string ts_to_str(const price_t &sT);
 } // namespace bt
 
