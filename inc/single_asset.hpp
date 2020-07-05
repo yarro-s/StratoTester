@@ -1,3 +1,5 @@
+// Copyright 2020 Yarro S
+
 #pragma once
 
 #include <backtest.hpp>
@@ -6,44 +8,39 @@
 #include <result.hpp>
 
 
-namespace bt
-{
-    class single_asset : public backtest
-    {
-    private:
-        result res;
-        balance_book book;
-        asset_alloc &a_alloc;
+namespace bt {
 
-        size_t rb_period = 1;
+class single_asset : public backtest {
+ private:
+    result res;
+    balance_book book;
+    asset_alloc &a_alloc;
 
-    public:
-        single_asset rebalance_every(size_t period)
-        {
-            rb_period = period;
-            return *this;
-        }
+    size_t rb_period = 1;
 
-        result const &results()
-        {
-            return res;
-        }
+ public:
+    single_asset rebalance_every(size_t period) {
+        rb_period = period;
+        return *this;
+    }
 
-        timed_result results(time_frame tf)
-        {
-            return timed_result(res, tf);
-        }
+    result const &results() {
+        return res;
+    }
 
-        single_asset &update(price px, weight w);
-        single_asset &run(price_t const &pT);
+    timed_result results(time_frame tf) {
+        return timed_result(res, tf);
+    }
 
-        single_asset(asset_alloc &a_alloc)
-            : single_asset(a_alloc, 1.0e18) {}
+    single_asset &update(price px, weight w);
+    single_asset &run(price_t const &pT);
 
-        single_asset(asset_alloc &a_alloc,
-                     price initial_deposit)
-            : a_alloc(a_alloc),
-              book(initial_deposit) {}
-    };
-} // namespace bt
+    single_asset(asset_alloc &a_alloc)
+        : single_asset(a_alloc, 1.0e18) {}
+
+    single_asset(asset_alloc &a_alloc,
+                    price initial_deposit)
+        : book(initial_deposit), a_alloc(a_alloc) {}
+};
+}  // namespace bt
 
