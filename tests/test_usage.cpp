@@ -1,4 +1,4 @@
-// Copyright 2020 Yaroslav Sh.
+// Copyright 2020 Yarro S
 
 #include <iostream>
 
