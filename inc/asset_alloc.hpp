@@ -22,8 +22,8 @@ class asset_alloc {
 
         // clamp to 0...1
         auto const w_hi = 1.0, w_lo = -1.0;
-        return w >= w_lo && w <= w_hi
-            ? w : (w > w_hi ? w_hi : w_lo);
+        return w >= w_lo && w <= w_hi ? w
+                                      : (w > w_hi ? w_hi : w_lo);
     }
 
     virtual ~asset_alloc() {}
