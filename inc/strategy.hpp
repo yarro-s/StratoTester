@@ -24,8 +24,8 @@ class strategy : public asset_alloc {
     }
 
  protected:
-    weight algo(price_t const &) override {
-        return 0.0;
+    weight algo(price_t const &price_hist) override {
+        return strat.on_hist(price_hist);
     }
 
  public:
@@ -35,10 +35,6 @@ class strategy : public asset_alloc {
 
     strategy<asset_alloc_lb> lookback(size_t n) {
         return _filter_rb(strat, n);    // except rb
-    }
-
-    weight on_hist(price_t const &price_hist) override {
-        return strat.on_hist(price_hist);
     }
 
     template <class... Args>

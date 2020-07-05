@@ -17,7 +17,7 @@ class asset_alloc {
     virtual weight algo(price_t const &price_hist) = 0;
 
  public:
-    virtual weight on_hist(price_t const &price_hist) {
+    weight on_hist(price_t const &price_hist) {
         auto const w = algo(price_hist);
 
         // clamp to 0...1

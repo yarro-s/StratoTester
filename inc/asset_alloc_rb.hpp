@@ -19,12 +19,7 @@ class asset_alloc_rb : public asset_alloc {
     size_t m_rbalance;
 
  protected:
-    weight algo(price_t const &) override {
-        return 0;
-    }
-
- public:
-    weight on_hist(price_t const &price_hist) override {
+    weight algo(price_t const &price_hist) override {
         weight wT = 0.0;
 
         if (!(price_hist.size() % m_rbalance)) {
@@ -37,7 +32,8 @@ class asset_alloc_rb : public asset_alloc {
         return wT;
     }
 
-    asset_alloc_rb(asset_alloc& a_alloc, size_t m)
+ public:
+    asset_alloc_rb(asset_alloc &a_alloc, size_t m)
         : a_alloc(a_alloc), m_rbalance(m) {}
 
     ~asset_alloc_rb() {}

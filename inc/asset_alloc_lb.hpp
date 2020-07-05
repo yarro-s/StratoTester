@@ -18,12 +18,7 @@ class asset_alloc_lb : public asset_alloc {
     size_t n_lback;
 
  protected:
-    weight algo(price_t const &) override {
-        return 0;
-    }
-
- public:
-    weight on_hist(price_t const &price_hist) override {
+    weight algo(price_t const &price_hist) override {
         auto const len_passed = price_hist.size();
         weight wT = 0.0;
 
@@ -40,6 +35,7 @@ class asset_alloc_lb : public asset_alloc {
         return wT;
     }
 
+ public:
     asset_alloc_lb(asset_alloc& a_alloc, size_t n)
         : a_alloc(a_alloc), n_lback(n) {}
 
