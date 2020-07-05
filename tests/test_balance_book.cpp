@@ -7,6 +7,75 @@
 
 #include <catch2/catch.hpp>
 
+SCENARIO("Selling and buying in volatility", "[balance_book]") {
+    GIVEN("Some money and assets") {
+        bt::price const init_deposit = 20000;
+        bt::balance_book book(init_deposit);
+
+        bt::price px = 750;
+        book.mkt_price(px);
+
+        int const init_assets = 15;
+        book.buy(init_assets);
+
+        int n_assets = 0;
+
+        WHEN("Buy after price has gone down") {
+            n_assets = 5;
+            bt::price new_px = 0.8 * px;
+
+            auto const prev_cash = book.cash();
+            auto const prev_assets = book.n_asset();
+
+            book.mkt_price(new_px).buy(n_assets);
+
+            THEN("Assets has gone up") {
+                REQUIRE(book.n_asset() == prev_assets + n_assets);
+            }
+
+            THEN("Cash has gone down") {
+                auto const cash_delta = n_assets * new_px;
+
+                REQUIRE(book.cash() == prev_cash - cash_delta);
+            }
+
+            THEN("Market values has gone down") {
+                auto const px_delta = new_px - px;
+                auto const val_delta = init_assets * px_delta;
+
+                REQUIRE(book.mkt_value() == init_deposit + val_delta);
+            }
+        }
+
+        WHEN("Sell after price has gone up") {
+            n_assets = 5;
+            bt::price new_px = 1.2 * px;
+
+            auto const prev_cash = book.cash();
+            auto const prev_assets = book.n_asset();
+
+            book.mkt_price(new_px).sell(n_assets);
+
+            THEN("Assets has gone down") {
+                REQUIRE(book.n_asset() == prev_assets - n_assets);
+            }
+
+            THEN("Cash has gone up") {
+                auto const cash_delta = n_assets * new_px;
+
+                REQUIRE(book.cash() == prev_cash + cash_delta);
+            }
+
+            THEN("Market values has gone up") {
+                auto const px_delta = new_px - px;
+                auto const val_delta = init_assets * px_delta;
+
+                REQUIRE(book.mkt_value() == init_deposit + val_delta);
+            }
+        }
+    }
+}
+
 SCENARIO("Market price volatility", "[balance_book]") {
     GIVEN("Some money and assets") {
         bt::price const init_deposit = 20000;
