@@ -16,14 +16,7 @@ class single_asset : public backtest {
     balance_book book;
     asset_alloc &a_alloc;
 
-    size_t rb_period = 1;
-
  public:
-    single_asset rebalance_every(size_t period) {
-        rb_period = period;
-        return *this;
-    }
-
     result const &results() {
         return res;
     }
@@ -43,4 +36,3 @@ class single_asset : public backtest {
         : book(initial_deposit), a_alloc(a_alloc) {}
 };
 }  // namespace bt
-
