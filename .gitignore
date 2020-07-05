@@ -10,7 +10,8 @@ src/.DS_Store
 lib/.DS_Store
 
 .DS_Store
-.DS_Store
+
 lib/.DS_Store
 tests/.DS_Store
 .DS_Store
+/tests/all_tests
