@@ -18,7 +18,7 @@ class result {
     price_t pvT;
 
  public:
-    void save(balance_book book) {
+    void save(balance_book const &book) {
         wT.push_back(book.asset_value() / book.mkt_value());
         pvT.push_back(book.mkt_value());
     }
