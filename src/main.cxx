@@ -36,5 +36,7 @@ int main() {
 #endif
 
     bt::single_asset back_test(strat);
-    auto const &res = back_test.run(pT);
+    back_test.run(pT);
+
+    // std::cout << std::endl << res.results().growth();
 }
