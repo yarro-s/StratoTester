@@ -42,10 +42,10 @@ single_asset &single_asset::run(price_t const &pT) {
     weight w = 0.0;
 
     for (auto p = pT.begin(); p != pT.end(); ++p) {
-        update(*p, w);
-
         auto const &roll_wnd = price_t(pT.begin(), p+1);
+
         w = a_alloc.on_hist(roll_wnd);
+        update(*p, w);
     }
     return *this;
 }
