@@ -21,6 +21,8 @@ class strategy : public asset_alloc {
     weight algo(price_t const &) override { return 0; }
 
  public:
+    virtual weight on_hist(price_t const &price_hist) = 0;
+
     virtual strategy &rebalance_every(size_t m) {
         return *this;
     }

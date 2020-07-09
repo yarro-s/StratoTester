@@ -23,10 +23,10 @@ int main() {
     size_t n = 3, m = 2;
 
     auto w_alloc = bt::weight_alloc(wT);
-    // auto strat = bt::lookback()
+    auto strat = bt::lookback(&w_alloc, 3);
 
 
-    bt::single_asset back_test(w_alloc);
+    bt::single_asset back_test(strat);
     auto t = back_test.run(pT);
 
     std::cout << std::endl << t.results().growth() << std::endl;

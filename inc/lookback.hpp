@@ -19,9 +19,9 @@ class lookback : public strategy {
             auto const t0 = price_hist.end() - n_lookback;
             auto const t_now = price_hist.end();
 
-            // std::cout << std::endl
-            //             << "  LOOKING BACK N = "
-            //             << std::distance(t0, t_now) << " ...";
+            std::cout << std::endl
+                        << "  LOOKING BACK N = "
+                        << std::distance(t0, t_now) << " ...";
             wT = get_alloc().on_hist(price_t(t0, t_now));
         }
 
