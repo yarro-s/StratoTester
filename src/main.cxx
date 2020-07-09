@@ -7,15 +7,12 @@
 #define BACKTESTER_IMPL
 // #include <backtester.hpp>
 #include <strategies/weight_alloc.hpp>
-#include <asset_alloc_lb.hpp>
-#include <asset_alloc_rb.hpp>
 #include <utils.hpp>
 #include <single_asset.hpp>
 #include <strategy.hpp>
+#include <rebalance.hpp>
+#include <lookback.hpp>
 
-
-#define REL_PATH
-// #define TEST_REV_REL
 
 int main() {
     bt::price_t pT {
@@ -24,19 +21,13 @@ int main() {
           0.2,   0.8,  0.3,   0.4,   0.7,  0.2,   0.0,   0.9, 0.1};
 
     size_t n = 3, m = 2;
-#ifdef REL_PATH
-    auto strat = bt::strategy<bt::weight_alloc>(wT)
-                     .lookback(m)
-                     .rebalance_every(n);
-#endif
-#ifdef TEST_REV_REL
-    auto strat = bt::strategy<bt::weight_alloc>(wT)
-                     .rebalance_every(n)
-                     .lookback(m);
-#endif
 
-    bt::single_asset back_test(strat);
-    back_test.run(pT);
+    auto w_alloc = bt::weight_alloc(wT);
+    // auto strat = bt::lookback()
 
-    // std::cout << std::endl << res.results().growth();
+
+    bt::single_asset back_test(w_alloc);
+    auto t = back_test.run(pT);
+
+    std::cout << std::endl << t.results().growth() << std::endl;
 }
