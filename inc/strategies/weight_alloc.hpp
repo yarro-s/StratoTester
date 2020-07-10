@@ -19,9 +19,9 @@ class weight_alloc : public asset_alloc {
     weight algo(price_t const &prices) noexcept {
         size_t idx_weight = (prices.size() - 1) % weights.size();
 
-        // std::cout << std::endl
-        //           << ">>W PT: " << str_rep(prices) << " => "
-        //           << weights[idx_weight] << std::endl;
+        std::cout << std::endl
+                  << ">>W PT: " << str_rep(prices) << " => "
+                  << weights[idx_weight] << std::endl;
         return weights[idx_weight];
     }
 

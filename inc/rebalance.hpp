@@ -15,9 +15,9 @@ class rebalance : public strategy {
         weight wT = 0.0;
 
         if (!(price_hist.size() % m_rebalance)) {
-            // std::cout << std::endl
-            //             << "  REBALANCING M = "
-            //             << price_hist.size() << " ...";
+            std::cout << std::endl
+                        << "  REBALANCING M = "
+                        << price_hist.size() << " ...";
             wT = get_alloc().on_hist(price_hist);
         }
 
