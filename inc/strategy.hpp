@@ -6,7 +6,6 @@
 #endif
 
 #include <asset_alloc.hpp>
-#include <strategies/lambda_alloc.hpp>
 #include <backtest.hpp>
 
 
