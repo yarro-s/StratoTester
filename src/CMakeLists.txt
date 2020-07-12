@@ -3,7 +3,9 @@ add_library (BTLight
     single_asset.cpp 
     utils.cpp 
     t_series.cpp 
-    result.cpp)
+    result.cpp
+    lookback.cpp
+    rebalance.cpp)
 
 target_include_directories (BTLightMain PUBLIC ../lib)
 target_include_directories (BTLightMain PUBLIC ../inc)

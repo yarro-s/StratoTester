@@ -32,6 +32,8 @@ class single_asset : public backtest {
         : single_asset(a_alloc, 1.0e18) {}
 
     single_asset(asset_alloc &a_alloc, price initial_deposit)
-        : book(initial_deposit), a_alloc(a_alloc) {}
+        : book(initial_deposit), a_alloc(a_alloc) {
+        a_alloc.set_model(this);
+    }
 };
 }  // namespace bt

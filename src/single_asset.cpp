@@ -9,6 +9,9 @@
 namespace bt {
 
 single_asset &single_asset::update(price px, weight w) {
+    // std::cout << std::endl
+    //           << " SA: GETTING UPDATED: "
+    //           << px << ", " << w << std::endl;
     book.mkt_price(px);
 
     auto const asset_value_req = book.mkt_value() * w;
@@ -34,7 +37,6 @@ single_asset &single_asset::update(price px, weight w) {
         book.sell(amount);
     }
 
-    res.save(book);
     return *this;
 }
 
@@ -44,8 +46,8 @@ single_asset &single_asset::run(price_t const &pT) {
     for (auto p = pT.begin(); p != pT.end(); ++p) {
         auto const &roll_wnd = price_t(pT.begin(), p+1);
 
-        w = a_alloc.on_hist(roll_wnd);
-        update(*p, w);
+        a_alloc.on_hist(roll_wnd);
+        res.save(book);
     }
     return *this;
 }
