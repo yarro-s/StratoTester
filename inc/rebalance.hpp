@@ -2,6 +2,7 @@
 #pragma once
 
 #include <strategy.hpp>
+#include <lookback.hpp>
 
 
 namespace bt {
@@ -14,21 +15,27 @@ class rebalance : public strategy {
     weight on_hist(price_t const &price_hist) override {
         weight wT = 0.0;
 
+        // std::cout << std::endl
+        //                 << "  REBALANCING M = " << m_rebalance
+        //                 << " ... " << price_hist.size();
+
         if (!(price_hist.size() % m_rebalance)) {
-            std::cout << std::endl
-                        << "  REBALANCING M = "
-                        << price_hist.size() << " ...";
-            wT = get_alloc().on_hist(price_hist);
+            wT = get_alloc()->on_hist(price_hist);
+
+            upd_model(price_hist.back(), wT);
         }
 
         return wT;
     }
 
-    strategy &set_lookback(size_t n) override {
-        return *this;
+    virtual strategy *rebalance_every(size_t m) override {
+        m_rebalance = m;
+        return this;
     }
 
+    strategy *set_lookback(size_t n) override;
+
     rebalance(asset_alloc *alloc, size_t m_rebalance)
-        : m_rebalance(m_rebalance), strategy(alloc) {}
+        : strategy(alloc), m_rebalance(m_rebalance) {}
 };
 }  // namespace bt
