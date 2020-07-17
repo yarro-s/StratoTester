@@ -12,7 +12,7 @@ namespace bt {
 using algo_lambda =
     std::function<weight(price_t const &)>;
 
-class lambda_alloc : asset_alloc {
+class lambda_alloc : public asset_alloc {
  private:
     std::function<weight(price_t)> const fa;
 
