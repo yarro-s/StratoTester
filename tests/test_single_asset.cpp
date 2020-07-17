@@ -7,79 +7,64 @@
 
 #include <single_asset.hpp>
 #include <strategies/weight_alloc.hpp>
+#include <buy_and_hold.hpp>
 
 #include <catch2/catch.hpp>
 
-SCENARIO("Weighting the portfolio", "[single_asset]") {
-    bt::weight_t wT { 0.0, 0.0, 0.0 };
-    bt::weight_alloc dummy_alloc(wT);
+TEST_CASE("Changing portfolio", "[single_asset][result]") {
+    bt::price const init_deposit = 10000;
 
-    GIVEN("Constant asset weight") {
-        bt::price const init_deposit = 10000;
-        bt::single_asset model(dummy_alloc, init_deposit);
+    SECTION("Changing weight and asset price") {
+        bt::price_t pT{ 150, 180, 250};
+        bt::weight_t wT{0.7, 0.8, 0.5};
 
-        bt::weight const wx = 0.7;
-        bt::price const px = 750;
+        bt::weight_alloc strat(wT);
+        bt::single_asset back_test(strat, init_deposit);
 
-        auto const n_actual_asset =
-            [init_deposit](bt::price px, bt::weight wx) {
-                return trunc((init_deposit * wx) / px);
-            };
+        auto res = back_test.run(pT).results();
 
-        int const n_asset = n_actual_asset(px, wx);
-        bt::price const init_cash = init_deposit - n_asset * px;
+        auto n_asset_expected = trunc(init_deposit * wT[0] / pT[1]);
+        auto cash_expected = init_deposit - n_asset_expected * pT[1];
 
-        WHEN("Asset is just allocated") {
-            model.update(px, wx);
+        auto const end_val_expected =
+            n_asset_expected * pT.back() + cash_expected;
 
-            THEN("market value stays the same") {
-                REQUIRE(model.results().pv().back() == init_deposit);
-            }
+        CHECK(Approx(end_val_expected / init_deposit)
+                == res.growth());
+    }
+}
 
-            THEN("actual weight is corrected for the market") {
-                auto const actual_weight =
-                    n_asset * px / init_deposit;
+TEST_CASE("Buy and hold portfolio", "[single_asset][result]") {
+    bt::price const init_deposit = 10000;
 
-                REQUIRE(model.results().wt().back() == actual_weight);
-            }
+    SECTION("Constant weight, growing price") {
+        bt::price_t pT{  150, 180, 250, 300, 410};
+        bt::weight w = 0.7;
 
-            WHEN("Price goes up") {
-                auto const new_px = 1.2 * px;
-                model.update(new_px, wx);
+        bt::buy_and_hold strat(w);
+        bt::single_asset back_test(strat, init_deposit);
 
-                auto const new_val = n_asset * new_px;
-                auto const new_pv = init_cash + new_val;
+        auto res = back_test.run(pT).results();
 
-                THEN("market value goes up") {
-                    REQUIRE(model.results().pv().back() == new_pv);
-                }
+        auto n_asset_expected = trunc(init_deposit * w / pT[1]);
+        auto cash_expected = init_deposit - n_asset_expected * pT[1];
 
-                THEN("weight increases") {
-                    auto const new_w =
-                        new_val / (init_cash + new_val);
+        auto const end_val_expected =
+            n_asset_expected * pT.back() + cash_expected;
 
-                    // REQUIRE(model.results().wt().back() == new_w);
-                }
-            }
+        CHECK(Approx(end_val_expected / init_deposit)
+                == res.growth());
+    }
 
-            WHEN("Price goes down") {
-                auto const new_px = 0.7 * px;
-                model.update(new_px, wx);
+    SECTION("Constant price, constant weight") {
+        bt::price_t pT{  150, 150, 150};
+        bt::weight_t wT {0.7, 0.7, 0.7};
 
-                auto const new_val = n_asset * new_px;
-                auto const new_pv = init_cash + new_val;
+        bt::weight_alloc strat(wT);
+        bt::single_asset back_test(strat, init_deposit);
 
-                THEN("market value goes down") {
-                    REQUIRE(model.results().pv().back() == new_pv);
-                }
+        auto res = back_test.run(pT).results();
 
-                THEN("weight decreases") {
-                    auto const new_w =
-                        new_val / (init_cash + new_val);
-
-                    // REQUIRE(model.results().wt().back() == new_w);
-                }
-            }
-        }
+        REQUIRE(1.0 == res.growth());
     }
 }
