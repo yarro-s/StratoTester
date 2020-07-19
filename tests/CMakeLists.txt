@@ -5,7 +5,8 @@ add_executable (Test
     test_balance_book.cpp
     test_single_asset.cpp
     test_result.cpp
-    test_lookback.cpp)
+    test_lookback.cpp
+    test_rebalance.cpp)
 
 target_include_directories (Test PUBLIC ../inc)
 target_include_directories (Test PUBLIC ../lib)
