@@ -1,6 +1,25 @@
 #!/bin/sh
 
-g++ -E -P all_modules.hpp -I../inc -I../src > all_modules_prep.hpp
-cat ../inc/deps.hpp all_modules_prep.hpp >> backtest.hpp
+HEADER=backtester_head.hpp
+SOURCE=backtester.cpp
+RELEASE=latest/backtester.hpp
 
-rm all_modules_prep.hpp
+cat templates/$HEADER > ${HEADER}
+cat templates/$SOURCE > ${SOURCE}
+
+for file in $(find ../inc -name '*.hpp')
+do
+    echo "#include \"${file}\"" >> $HEADER
+done
+
+cat ../src/*.cpp >> $SOURCE
+
+# TODO: fix the ugly includes
+g++ -P -E $HEADER -o _head_prep.hpp -I. -I../inc
+g++ -P -E $SOURCE -o _backtester_prep.cpp
+
+cat inc/deps.hpp > $RELEASE
+cat _head_prep.hpp >> _backtester_prep.cpp >> $RELEASE
+
+# clean up
+rm *pp

@@ -1,12 +1,14 @@
-// Copyright 2020 Yarro S
+/*
+ * Copyright (c) Yaroslav Shkurat.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
 #pragma once
 
 #define _HEAD_BLOCK
 
-/// cat templates/backtester_head.hpp > backtester_head.hpp
-/// ./scripts/make_head.sh
-/// g++ -P -E backtester_head.hpp -o head_prep.hpp -I../inc -I../inc/allocators
 
 
 

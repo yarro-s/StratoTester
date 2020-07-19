@@ -14,8 +14,3 @@ lib/.DS_Store
 lib/.DS_Store
 tests/.DS_Store
 .DS_Store
-release/backtester_head.hpp
-release/backtester_prep.cpp
-release/backtester.cpp
-release/backtester.hpp
-release/head_prep.hpp
