@@ -26,30 +26,28 @@ class t_series {
         return vals.at(tckr);
     }
 
-    std::set<std::time_t> const &timing() const {
+    std::set<std::time_t> const &timing() const noexcept {
         return t_stamps;
     }
 
-    std::set<ticker> const &tickers() const {
+    std::set<ticker> const &tickers() const noexcept {
         return _tickers;
     }
 
-    size_t n_tickers() const {
+    size_t n_tickers() const noexcept {
         return _tickers.size();
     }
 
-    size_t n_tpoints() const {
+    size_t n_tpoints() const noexcept {
         return t_stamps.size();
     }
 
-    void append_at(ticker tckr, std::time_t t_stamp, T val) {
+    void append_at(ticker tckr, std::time_t t_stamp, T val) noexcept {
         _tickers.insert(tckr);
 
-        auto const &pos = t_stamps.insert(t_stamp);
+        t_stamps.insert(t_stamp);
 
         vals[tckr].push_back(val);
     }
-
-    ~t_series() {}
 };
 }  // namespace bt
