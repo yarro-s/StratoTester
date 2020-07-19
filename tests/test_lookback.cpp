@@ -5,7 +5,6 @@
 
 #include <lookback.hpp>
 #include <strategies/lambda_alloc.hpp>
-#include <single_asset.hpp>
 #include <utils.hpp>
 
 #include <catch2/catch.hpp>
@@ -18,13 +17,13 @@ SCENARIO("Making decisions on some previous data points",
     GIVEN("A lookback period of M length") {
         size_t const m_lb = 3;
 
-        auto const trading_rule = [](bt::price_t pt) {
+        auto const test_rule = [](bt::price_t pt) {
             auto const pt_sum =
                 std::accumulate(pt.begin(), pt.end(),
                                 decltype(pt)::value_type(0));
             return pt_sum / 10000;
         };
-        auto alloc_rule = new bt::lambda_alloc(trading_rule);
+        auto alloc_rule = new bt::lambda_alloc(test_rule);
         auto strat = bt::lookback(alloc_rule, m_lb);
 
         WHEN("looking back on a history of k points < M lookback") {
@@ -71,10 +70,10 @@ SCENARIO("Making decisions on some previous data points",
     GIVEN("A unit length lookback period") {
         size_t const m_lb = 1;
 
-        auto const trading_rule = [](bt::price_t pt) {
+        auto const test_rule = [](bt::price_t pt) {
             return pt.front() / 1000;
         };
-        auto alloc_rule = new bt::lambda_alloc(trading_rule);
+        auto alloc_rule = new bt::lambda_alloc(test_rule);
         auto strat = bt::lookback(alloc_rule, m_lb);
 
         WHEN("looking back on a unit length history") {

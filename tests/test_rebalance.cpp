@@ -1,11 +1,9 @@
 // Copyright 2020 Yarro S
 
 #include <iostream>
-#include <numeric>
 
 #include <rebalance.hpp>
 #include <strategies/lambda_alloc.hpp>
-#include <single_asset.hpp>
 #include <utils.hpp>
 
 #include <catch2/catch.hpp>
