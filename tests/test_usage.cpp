@@ -2,19 +2,22 @@
 
 #include <iostream>
 
-#include <strategy.hpp>
-#include <allocators/weight_alloc.hpp>
-#include <single_asset.hpp>
-#include <utils.hpp>
+// #include <release/backtester.hpp>
 
 #include <catch2/catch.hpp>
 
 
 TEST_CASE("Basic usage showcase", "[usage]") {
-    bt::price_t price_hist {
-        110.5, 113.1, 29.0, 220.4, 535.2, 58.5, 100.0, 200.1, 6.2};
-    bt::weight_t weights {
-          0.2,   0.8,  0.3,   0.4,   0.7,  0.2,   0.0,   0.9, 0.1};
+    // bt::price_t price_hist {
+    //     110.5, 113.1, 29.0, 220.4, 535.2, 58.5, 100.0, 200.1, 6.2};
+    // bt::weight_t weights {
+    //       0.2,   0.8,  0.3,   0.4,   0.7,  0.2,   0.0,   0.9, 0.1};
+
+    SECTION("backtester is built correctly") {
+        // bt::buy_and_hold strat(w);
+        // bt::single_asset back_test(strat, init_deposit);
+        // auto res = back_test.run(pT).results();
+    }
 
     SECTION("backtest with lookback and rebalancing is run") {
         /*

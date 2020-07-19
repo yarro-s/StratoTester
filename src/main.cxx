@@ -5,35 +5,21 @@
 #include <iostream>
 #include <vector>
 #define BACKTESTER_IMPL
-// #include <backtester.hpp>
-#include <allocators/weight_alloc.hpp>
-#include <utils.hpp>
-#include <single_asset.hpp>
-#include <strategy.hpp>
-#include <rebalance.hpp>
-#include <lookback.hpp>
+#include <release/backtester.hpp>
 
 
 int main() {
+    auto const init_deposit = 10000;
     bt::price_t pT {
         110.5, 113.1, 29.0, 220.4, 535.2, 58.5, 100.0, 200.1, 6.2};
-    bt::weight_t wT {
-          0.2,   0.8,  0.3,   0.4,   0.7,  0.2,   0.1,   0.9, 0.1};
+    // bt::weight_t wT {
+    //       0.2,   0.8,  0.3,   0.4,   0.7,  0.2,   0.1,   0.9, 0.1};
+    auto const w = 0.5;
 
-    // size_t n_lb = 3, m_rb = 4;
-
-    // auto *w_alloc = new bt::weight_alloc(wT);
-    // auto strat_lb = new bt::lookback(w_alloc, n_lb);
-    // auto strat_rb = new bt::rebalance(w_alloc, m_rb);
-
-    // auto strat = w_alloc;
-    // auto strat = strat_lb->rebalance_every(m_rb);
-    // auto strat = strat_rb->set_lookback(n_lb);
-
-    bt::weight_alloc strat(wT);
-    bt::single_asset back_test(strat, 10000);
-    auto t = back_test.run(pT);
+    bt::buy_and_hold strat(w);
+    bt::single_asset back_test(strat, init_deposit);
+    auto res = back_test.run(pT).results();
 
     std::cout << std::endl
-              << bt::str_rep(t.results().pv()) << std::endl;
+                << bt::str_rep(res.pv()) << std::endl;
 }
