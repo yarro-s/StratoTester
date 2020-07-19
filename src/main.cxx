@@ -6,7 +6,7 @@
 #include <vector>
 #define BACKTESTER_IMPL
 // #include <backtester.hpp>
-#include <strategies/weight_alloc.hpp>
+#include <allocators/weight_alloc.hpp>
 #include <utils.hpp>
 #include <single_asset.hpp>
 #include <strategy.hpp>
@@ -20,7 +20,7 @@ int main() {
     bt::weight_t wT {
           0.2,   0.8,  0.3,   0.4,   0.7,  0.2,   0.1,   0.9, 0.1};
 
-    size_t n_lb = 3, m_rb = 4;
+    // size_t n_lb = 3, m_rb = 4;
 
     // auto *w_alloc = new bt::weight_alloc(wT);
     // auto strat_lb = new bt::lookback(w_alloc, n_lb);
