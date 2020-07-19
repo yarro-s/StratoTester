@@ -7,7 +7,8 @@ add_executable (Test
     test_result.cpp
     test_lookback.cpp
     test_rebalance.cpp
-    test_rebalanced_lookback.cpp)
+    test_rebalanced_lookback.cpp
+    test_t_series.cpp)
 
 target_include_directories (Test PUBLIC ../inc)
 target_include_directories (Test PUBLIC ../lib)
