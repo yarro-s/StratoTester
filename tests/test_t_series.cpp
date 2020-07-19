@@ -14,29 +14,35 @@
 #include <t_series.hpp>
 
 TEST_CASE("Time series initialization", "[t_series]") {
+    std::string const datapath = "../tests/data/";
+    std::string const time_fmt = "%Y-%m-%d";
+
     bt::t_series<bt::price> ts;
 
-    struct tm timeinfo = (const struct tm){0};
+    struct tm timeinfo;
 
     SECTION("life-sized data loaded") {
-        std::string dataset_name = "^IXIC",
-                    index_name = "Date",
-                    field_name = "Close";
+        std::string const
+            dataset_name = "^IXIC",
+            index_name = "Date",
+            field_name = "Close";
 
         io::CSVReader<2, io::trim_chars<>>
-            in("../tests/data/" + dataset_name + ".csv");
+            in(datapath + dataset_name + ".csv");
 
-        in.read_header(io::ignore_extra_column, index_name,
-                       field_name);
+        in.read_header(io::ignore_extra_column,
+            index_name, field_name);
 
         std::string date;
-        bt::price p;
+        bt::price px;
+        // timeinfo = (const struct tm){0};
 
-        while (in.read_row(date, p)) {
-            strptime(date.c_str(), "%Y-%m-%d", &timeinfo);
+        while (in.read_row(date, px)) {
+            strptime(date.c_str(), time_fmt.c_str(), &timeinfo);
+            timeinfo.tm_isdst = -1;
             auto const t_stamp = mktime(&timeinfo);
 
-            ts.append_at(dataset_name, t_stamp, p);
+            ts.append_at(dataset_name, t_stamp, px);
         }
 
         REQUIRE(ts.vals_for(dataset_name).front() == Approx(100));
@@ -58,11 +64,13 @@ TEST_CASE("Time series initialization", "[t_series]") {
         bt::price_t vals{10.5, 12.3, 11.9, 14.7, 15.4};
         std::string tckr("A");
 
+        // timeinfo = (const struct tm){0};
         for (auto v = vals.begin(); v != vals.end(); ++v) {
             auto const idxT = std::distance(vals.begin(), v);
             auto const t_raw = t_stamps[idxT];
 
             strptime(t_raw.c_str(), "%D", &timeinfo);
+            timeinfo.tm_isdst = -1;
             auto const t_stamp = mktime(&timeinfo);
 
             ts.append_at(tckr, t_stamp, *v);
@@ -87,9 +95,11 @@ TEST_CASE("Time series initialization", "[t_series]") {
 
         std::string date;
         bt::price A, T, I;
+        // timeinfo = (const struct tm){0};
 
         while (in.read_row(date, A, T, I)) {
             strptime(date.c_str(), "%D", &timeinfo);
+            timeinfo.tm_isdst = -1;
             auto const t_stamp = mktime(&timeinfo);
 
             ts.append_at("A", t_stamp, A);
