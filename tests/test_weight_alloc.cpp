@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cmath>
 
-#include <strategies/weight_alloc.hpp>
+#include <allocators/weight_alloc.hpp>
 #include <utils.hpp>
 
 #include <catch2/catch.hpp>

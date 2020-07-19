@@ -5,7 +5,7 @@
 
 #include <rebalance.hpp>
 #include <lookback.hpp>
-#include <strategies/lambda_alloc.hpp>
+#include <allocators/lambda_alloc.hpp>
 #include <utils.hpp>
 
 #include <catch2/catch.hpp>

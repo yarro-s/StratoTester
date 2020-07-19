@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include <strategy.hpp>
-#include <strategies/weight_alloc.hpp>
+#include <allocators/weight_alloc.hpp>
 #include <single_asset.hpp>
 #include <utils.hpp>
 

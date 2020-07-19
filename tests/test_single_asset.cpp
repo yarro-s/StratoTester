@@ -6,7 +6,7 @@
 #include <utils.hpp>
 
 #include <single_asset.hpp>
-#include <strategies/weight_alloc.hpp>
+#include <allocators/weight_alloc.hpp>
 #include <buy_and_hold.hpp>
 
 #include <catch2/catch.hpp>

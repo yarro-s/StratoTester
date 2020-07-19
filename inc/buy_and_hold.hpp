@@ -2,7 +2,7 @@
 #pragma once
 
 #include <strategy.hpp>
-#include <strategies/const_alloc.hpp>
+#include <allocators/const_alloc.hpp>
 
 
 namespace bt {
