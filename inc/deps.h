@@ -8,7 +8,9 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <sstream>
 
+#include <cmath>
 #include <chrono>
 
 #include <functional>

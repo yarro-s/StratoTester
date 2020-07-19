@@ -2,6 +2,10 @@
 
 #pragma once
 
+#ifndef _HEAD_BLOCK
+#include <cmath>
+#endif
+
 #include <balance_book.hpp>
 
 namespace bt {

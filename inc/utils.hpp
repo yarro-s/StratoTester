@@ -4,6 +4,8 @@
 
 #ifndef _HEAD_BLOCK
 #include <string>
+#include <iostream>
+#include <sstream>
 #endif
 
 #include <t_series.hpp>
