@@ -28,16 +28,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
 namespace bt {
 using price = double;
 using weight = double;
@@ -173,13 +163,6 @@ std::string str_rep(t_series<double> const &ts);
 
 std::string str_rep(price_t const &sT);
 }
-
-
-
-
-
-
-
 namespace bt {
 class backtest {
  public:
@@ -258,13 +241,6 @@ class strategy : public asset_alloc {
         : alloc(alloc) {}
 };
 }
-
-
-
-
-
-
-
 namespace bt {
 
 class lookback : public strategy {
@@ -339,13 +315,6 @@ class rebalance : public strategy {
         : strategy(alloc), m_rebalance(m_rebalance) {}
 };
 }
-
-
-
-
-
-
-
 namespace bt {
 
 class result {
@@ -421,11 +390,6 @@ class single_asset : public backtest {
     }
 };
 }
-
-
-
-
-
 
 
 
