@@ -2,9 +2,8 @@
 
 #ifndef _SRC_BLOCK
 #include <single_asset.hpp>
-#endif
-
 #include <utils.hpp>
+#endif
 
 namespace bt {
 

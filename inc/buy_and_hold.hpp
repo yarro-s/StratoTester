@@ -1,4 +1,5 @@
 // Copyright 2020 Yarro S
+
 #pragma once
 
 #include <strategy.hpp>
