@@ -1,7 +1,9 @@
+// Copyright 2020 Yarro S
+
 #pragma once
 
 #ifndef _HEAD_BLOCK
-#include <deps.h>
+#include <string>
 #endif
 
 #include <t_series.hpp>
@@ -9,14 +11,10 @@
 #include <unit_defs.hpp>
 
 
-namespace bt
-{
-    std::string str_rep(balance_book &book);
+namespace bt {
+std::string str_rep(balance_book const &book);
 
-    std::string str_rep(t_series<double> const &ts);
+std::string str_rep(t_series<double> const &ts);
 
-    std::string str_rep(const price_t &sT);
-
-    std::string ts_to_str(const price_t &sT);
-} // namespace bt
-
+std::string str_rep(price_t const &sT);
+}  // namespace bt
