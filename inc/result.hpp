@@ -2,13 +2,7 @@
 
 #pragma once
 
-#ifndef _HEAD_BLOCK
-#include <deps.h>
-#endif
-
 #include <balance_book.hpp>
-#include <unit_defs.hpp>  /// --
-
 
 namespace bt {
 

@@ -1,8 +1,6 @@
 // Copyright 2020 Yarro S
 
 #ifndef _SRC_BLOCK
-// #include <deps.h>
-
 #include <single_asset.hpp>
 #endif
 
