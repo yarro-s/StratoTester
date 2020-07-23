@@ -532,16 +532,17 @@ price result::max_drawdown() const {
 namespace bt {
 
 single_asset &single_asset::update(price px, weight w) {
-
-
-
-
     px = book.mkt_price();
     auto const asset_value_req = book.mkt_value() * w;
     auto const n_asset_req = trunc(asset_value_req / px);
 
     auto const n_asset_diff = n_asset_req - book.n_asset();
     auto const amount = abs(n_asset_diff);
+
+    std::cout << std::endl
+              << "AV req = " << asset_value_req
+              << "N asset req = " << n_asset_req
+              << "delta N req = " << n_asset_diff << std::endl;
 
     if (n_asset_diff > 0) {
         book.buy(amount);
@@ -555,14 +556,10 @@ single_asset &single_asset::update(price px, weight w) {
 single_asset &single_asset::run(price_t const &pT) {
 
 
+    std::cout << std::endl << "   U P DATI N G  " << std::endl;
+
     for (auto p = pT.begin()+1; p != pT.end(); ++p) {
         auto const &roll_wnd = price_t(pT.begin(), p);
-
-
-
-
-
-
         book.mkt_price(*p);
         a_alloc.on_hist(roll_wnd);
         res.save(book);
