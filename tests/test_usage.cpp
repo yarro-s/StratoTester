@@ -6,11 +6,9 @@
  */
 
 #include <iostream>
-
+#include <catch2/catch.hpp>
 #define BACKTESTER_IMPL
 #include <latest/backtester.hpp>
-
-#include <catch2/catch.hpp>
 
 
 TEST_CASE("Basic usage showcases", "[usage]") {
@@ -33,3 +31,4 @@ TEST_CASE("Basic usage showcases", "[usage]") {
         
     }
 }
+

@@ -539,25 +539,15 @@ single_asset &single_asset::update(price px, weight w) {
     auto const n_asset_diff = n_asset_req - book.n_asset();
     auto const amount = abs(n_asset_diff);
 
-    std::cout << std::endl
-              << "AV req = " << asset_value_req
-              << "N asset req = " << n_asset_req
-              << "delta N req = " << n_asset_diff << std::endl;
-
     if (n_asset_diff > 0) {
         book.buy(amount);
     } else if (n_asset_diff < 0) {
         book.sell(amount);
     }
-
     return *this;
 }
 
 single_asset &single_asset::run(price_t const &pT) {
-
-
-    std::cout << std::endl << "   U P DATI N G  " << std::endl;
-
     for (auto p = pT.begin()+1; p != pT.end(); ++p) {
         auto const &roll_wnd = price_t(pT.begin(), p);
         book.mkt_price(*p);

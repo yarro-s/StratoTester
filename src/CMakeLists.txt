@@ -1,5 +1,4 @@
-add_executable (BTLightMain main.cxx)
-add_library (BTLight 
+add_library (BacktesterHpp 
     single_asset.cpp 
     utils.cpp 
     t_series.cpp 
@@ -7,9 +6,5 @@ add_library (BTLight
     lookback.cpp
     rebalance.cpp)
 
-target_include_directories (BTLightMain PUBLIC ../lib)
-target_include_directories (BTLightMain PUBLIC ../inc)
-target_include_directories (BTLight PUBLIC ../inc)
-target_include_directories (BTLightMain PUBLIC ..)
+target_include_directories (BacktesterHpp PUBLIC ../inc)
 
-target_link_libraries (BTLightMain BTLight)

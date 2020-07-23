@@ -5,17 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#include <csv.h>
-#include <unistd.h>
+// #include <csv.h>
+// #include <unistd.h>
 #include <iostream>
 #include <vector>
 #define BACKTESTER_IMPL
 #include <latest/backtester.hpp>
-// #include <utils.hpp>
-
-// #include <single_asset.hpp>
-// #include <allocators/weight_alloc.hpp>
-// #include <buy_and_hold.hpp>
 
 int main() {
     bt::price const init_cash = 10000;
