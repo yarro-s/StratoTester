@@ -4,10 +4,11 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
 #pragma once
 
 #include <strategy.hpp>
-#include <lookback.hpp>
+#include <mk_strategy.hpp>
 
 
 namespace bt {
@@ -19,10 +20,6 @@ class rebalance : public strategy {
  public:
     weight on_hist(price_t const &price_hist) override {
         weight wT = 0.0;
-
-        // std::cout << std::endl
-        //                 << "  REBALANCING M = " << m_rebalance
-        //                 << " ... " << price_hist.size();
 
         if (!(price_hist.size() % m_rebalance)) {
             wT = get_alloc()->on_hist(price_hist);
@@ -38,7 +35,9 @@ class rebalance : public strategy {
         return this;
     }
 
-    strategy *set_lookback(size_t n) override;
+    strategy *set_lookback(size_t n) override {
+        return &set_alloc(_mk_lookback(get_alloc(), n));
+    }
 
     rebalance(asset_alloc *alloc, size_t m_rebalance)
         : strategy(alloc), m_rebalance(m_rebalance) {}

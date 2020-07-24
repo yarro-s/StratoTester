@@ -8,7 +8,7 @@
 #pragma once
 
 #include <strategy.hpp>
-#include <rebalance.hpp>
+#include <mk_strategy.hpp>
 
 
 namespace bt {
@@ -21,10 +21,6 @@ class lookback : public strategy {
     weight on_hist(price_t const &price_hist) override {
         auto const len_passed = price_hist.size();
         weight wT = 0.0;
-
-        // std::cout << std::endl
-        //           << "  LOOKING BACK N = "
-        //           << n_lookback << " ... " << len_passed;
 
         if (len_passed >= n_lookback) {
             auto const t0 = price_hist.end() - n_lookback;
@@ -43,7 +39,12 @@ class lookback : public strategy {
         return this;
     }
 
-    strategy *rebalance_every(size_t m_rebalance) override;
+    strategy *rebalance_every(size_t m_rebalance) override {
+        auto strat_rb = _mk_rebalance(get_alloc(), m_rebalance);
+        strat_rb->set_alloc(this);
+
+        return strat_rb;
+    }
 
     lookback(asset_alloc *alloc, size_t n_lookback)
         : strategy(alloc), n_lookback(n_lookback) {}

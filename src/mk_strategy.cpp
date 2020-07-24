@@ -6,13 +6,17 @@
  */
 
 #ifndef _SRC_BLOCK
-#include <rebalance.hpp>
 #include <lookback.hpp>
+#include <rebalance.hpp>
 #endif
 
 namespace bt {
 
-strategy *rebalance::set_lookback(size_t n_lookback) {
-    return &set_alloc(new lookback(get_alloc(), n_lookback));
+strategy *_mk_rebalance(asset_alloc *alloc, size_t m_rebalance) {
+    return new rebalance(alloc, m_rebalance);
+}
+
+strategy *_mk_lookback(asset_alloc *alloc, size_t n_lookback) {
+    return new lookback(alloc, n_lookback);
 }
 }  // namespace bt

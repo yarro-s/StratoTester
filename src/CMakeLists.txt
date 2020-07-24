@@ -3,8 +3,7 @@ add_library (BacktesterHpp
     utils.cpp 
     t_series.cpp 
     result.cpp
-    lookback.cpp
-    rebalance.cpp)
+    mk_strategy.cpp)
 
 target_include_directories (BacktesterHpp PUBLIC ../inc)
 
