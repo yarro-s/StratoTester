@@ -1,3 +1,5 @@
+
+#   Development test set
 add_executable (TestAll 
     test_main.cpp
     test_weight_alloc.cpp
@@ -14,6 +16,19 @@ target_include_directories (TestAll PUBLIC ./lib)
 
 target_link_libraries (TestAll BacktesterHpp)
 
+
+#   New features test bench
+add_executable (TestFeature
+    test_main.cpp
+    test_bench.cpp)
+
+target_include_directories (TestFeature PUBLIC ../inc)
+target_include_directories (TestFeature PUBLIC ./lib)
+
+target_link_libraries (TestFeature BacktesterHpp)
+
+
+#   For testing real-world usage with the header-only version
 add_executable (TestReal 
     test_main.cpp
     test_usage.cpp)
