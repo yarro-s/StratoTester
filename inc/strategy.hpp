@@ -8,7 +8,7 @@
 #pragma once
 
 #ifndef _HEAD_BLOCK
-#include <memory>
+// #include <memory>
 #endif
 
 #include <asset_alloc.hpp>
@@ -42,5 +42,9 @@ class strategy : public asset_alloc {
 
     explicit strategy(asset_alloc *alloc)
         : alloc(alloc) {}
+
+    ~strategy() {
+        delete alloc;
+    }
 };
 }  // namespace bt
