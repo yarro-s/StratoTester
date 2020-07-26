@@ -31,7 +31,6 @@ class strategy : public chained_alloc {
                 new with_lookback(my_rebalanced_alloc->get_next(), m);
             my_rebalanced_alloc->set_next(lookback_alloc);
         } else {
-            // std::cout << std::endl << "   >> SETTING LOOKBACK ";
             set_next(new with_lookback(get_next(), m));
         }
         return *this;
