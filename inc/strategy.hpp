@@ -27,9 +27,13 @@ class strategy : public asset_alloc {
  public:
     weight on_hist(price_t const &price_hist) override = 0;
 
-    virtual strategy *rebalance_every(size_t m) = 0;
+    virtual strategy &rebalance_every(size_t) {
+        return *this;
+    }
 
-    virtual strategy *set_lookback(size_t n) = 0;
+    virtual strategy &set_lookback(size_t) {
+        return *this;
+    }
 
     strategy &set_alloc(asset_alloc *alloc) {
         this->alloc = alloc;

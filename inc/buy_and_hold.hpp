@@ -29,15 +29,7 @@ class buy_and_hold : public strategy {
         return wT;
     }
 
-    strategy *rebalance_every(size_t) override {
-        return this;
-    }
-
-    strategy *set_lookback(size_t) override {
-        return this;
-    }
-
-    buy_and_hold(weight const w)
+    explicit buy_and_hold(weight const w)
         : strategy(new const_alloc(w)) {}
 };
 }  // namespace bt
