@@ -19,11 +19,24 @@ namespace bt {
 
 class const_alloc : public asset_alloc {
  private:
+    bool has_updated = false;
+
     weight const weight_;
 
  protected:
-    weight algo(price_t const &) noexcept {
+    weight algo(price_t const &) override {
         return weight_;
+    }
+
+    weight on_hist(price_t const &price_hist) override {
+        auto const wT = algo(price_hist);
+
+        if (!has_updated) {  // call once
+            upd_model(price_hist.back(), wT);
+
+            has_updated = true;
+        }
+        return wT;
     }
 
  public:
