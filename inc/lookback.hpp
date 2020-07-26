@@ -34,19 +34,26 @@ class lookback : public strategy {
         return wT;
     }
 
-    strategy *set_lookback(size_t n) override {
-        n_lookback = n;
-        return this;
-    }
-
-    strategy *rebalance_every(size_t m_rebalance) override {
-        auto strat_rb = _mk_rebalance(get_alloc(), m_rebalance);
+    strategy &rebalance_every(size_t m) override {
+        auto strat_rb = _mk_rebalance(get_alloc(), m);
         strat_rb->set_alloc(this);
 
-        return strat_rb;
+        return *strat_rb;
+    }
+
+    strategy &set_lookback(size_t n) override {
+        n_lookback = n;
+        return *this;
     }
 
     lookback(asset_alloc *alloc, size_t n_lookback)
         : strategy(alloc), n_lookback(n_lookback) {}
+
+ public:
+    template <class Alloc, class... Args>
+    static lookback *with(const Args&... args) {
+        auto allocator =  new Alloc(args...);
+        return new bt::lookback(allocator, 0);
+    }
 };
 }  // namespace bt

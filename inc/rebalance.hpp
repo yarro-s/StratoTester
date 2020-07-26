@@ -30,13 +30,14 @@ class rebalance : public strategy {
         return wT;
     }
 
-    virtual strategy *rebalance_every(size_t m) override {
+    strategy &rebalance_every(size_t m) override {
         m_rebalance = m;
-        return this;
+        return *this;
     }
 
-    strategy *set_lookback(size_t n) override {
-        return &set_alloc(_mk_lookback(get_alloc(), n));
+    strategy &set_lookback(size_t n) override {
+        set_alloc(_mk_lookback(get_alloc(), n));
+        return *this;
     }
 
     rebalance(asset_alloc *alloc, size_t m_rebalance)
