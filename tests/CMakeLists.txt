@@ -1,7 +1,7 @@
 
 #   Development test set
 add_executable (TestAll 
-    test_main.cpp
+    test_main.cpp                  
     test_weight_alloc.cpp
     test_balance_book.cpp
     test_single_asset.cpp
@@ -29,9 +29,9 @@ target_link_libraries (TestFeature BacktesterHpp)
 
 
 #   For testing real-world usage with the header-only version
-add_executable (TestReal 
-    test_main.cpp
-    test_usage.cpp)
+###add_executable (TestReal 
+###    test_main.cpp
+###    test_usage.cpp)
 
-target_include_directories (TestReal PUBLIC ../release)
-target_include_directories (TestReal PUBLIC ./lib)
+###target_include_directories (TestReal PUBLIC ../release)
+###target_include_directories (TestReal PUBLIC ./lib)

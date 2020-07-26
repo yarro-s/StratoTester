@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-#include <rebalance.hpp>
+#include <strategy.hpp>
 #include <allocators/lambda_alloc.hpp>
 #include <utils.hpp>
 
@@ -25,7 +25,7 @@ SCENARIO("Rebalancing", "[rebalace]") {
         size_t const n_rb = 3;
 
         auto alloc_rule = new bt::lambda_alloc(test_rule);
-        auto strat = bt::rebalance(alloc_rule, n_rb);
+        auto strat = bt::strategy(alloc_rule).rebalance_every(n_rb);
 
         WHEN("history is less then the rebalancing period") {
             bt::price_t const hist_slice(price_hist.begin(),
@@ -76,7 +76,7 @@ SCENARIO("Rebalancing", "[rebalace]") {
         size_t const n_rb = 1;
 
         auto alloc_rule = new bt::lambda_alloc(test_rule);
-        auto strat = bt::rebalance(alloc_rule, n_rb);
+        auto strat = bt::strategy(alloc_rule).rebalance_every(n_rb);
 
         WHEN("history is equal to the rebalancing period") {
             bt::price_t const hist_slice(price_hist.begin(),

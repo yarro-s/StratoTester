@@ -6,24 +6,36 @@
  */
 
 #include <iostream>
+#include <numeric>
 #include <catch2/catch.hpp>
 
-#include <buy_and_hold.hpp>
+#include <strategy.hpp>
 #include <single_asset.hpp>
+#include <allocators/lambda_alloc.hpp>
+#include <utils.hpp>
 
-TEST_CASE("Basic usage showcases", "[usage]") {
-    bt::price_t price_hist {110.5, 113.1, 29.0, 220.4, 565.3, 42.0};
 
-    SECTION("backtester.hpp is built correctly") {
-        auto const init_deposit = 1000;
-        auto const w = 0.5;
+TEST_CASE("New feature", "[usage]") {
+    bt::price_t price_hist {
+        116.5, 13.1, 9.2, 520.4, 12.2, 88.5, 100.0, 800.1, 3.2};
 
-        bt::buy_and_hold strat(w);
-        bt::single_asset back_test(strat, init_deposit);
-        auto res = back_test.run(price_hist).results();
+    SECTION("A lookback period of M length") {
+        size_t const m_lb = 3;
 
-        auto const res_expected = "[1000, 663.6, 1429.2, 2808.8, 715.6]";
+        auto const test_rule = [](bt::price_t pt) {
+            auto const pt_sum =
+                std::accumulate(pt.begin(), pt.end(),
+                                decltype(pt)::value_type(0));
+            return pt_sum / 10000;
+        };
+        auto alloc_rule = new bt::lambda_alloc(test_rule);
+        auto strat = bt::strategy(alloc_rule).look_back(m_lb);
 
-        REQUIRE(res_expected == bt::str_rep(res.pv()));
+        bt::price_t const hist_slice(price_hist.begin(),
+                                     price_hist.begin() + 2);
+
+        auto const w = strat.on_hist(hist_slice);
+
+        std::cout << "   W = " << w << std::endl;
     }
 }

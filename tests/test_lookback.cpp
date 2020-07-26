@@ -8,7 +8,7 @@
 #include <iostream>
 #include <numeric>
 
-#include <lookback.hpp>
+#include <strategy.hpp>
 #include <allocators/lambda_alloc.hpp>
 #include <utils.hpp>
 
@@ -29,7 +29,7 @@ SCENARIO("Making decisions on some previous data points",
             return pt_sum / 10000;
         };
         auto alloc_rule = new bt::lambda_alloc(test_rule);
-        auto strat = bt::lookback(alloc_rule, m_lb);
+        auto strat = bt::strategy(alloc_rule).look_back(m_lb);
 
         WHEN("looking back on a history of k points < M lookback") {
             bt::price_t const hist_slice(price_hist.begin(),
@@ -71,7 +71,7 @@ SCENARIO("Making decisions on some previous data points",
             }
         }
     }
-
+    
     GIVEN("A unit length lookback period") {
         size_t const m_lb = 1;
 
@@ -79,7 +79,7 @@ SCENARIO("Making decisions on some previous data points",
             return pt.front() / 1000;
         };
         auto alloc_rule = new bt::lambda_alloc(test_rule);
-        auto strat = bt::lookback(alloc_rule, m_lb);
+        auto strat = bt::strategy(alloc_rule).look_back(m_lb);
 
         WHEN("looking back on a unit length history") {
             bt::price_t const hist_slice(price_hist.begin(),

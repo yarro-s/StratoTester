@@ -8,47 +8,42 @@
 #pragma once
 
 #ifndef _HEAD_BLOCK
-// #include <memory>
+#include <iostream>
 #endif
 
-#include <asset_alloc.hpp>
-#include <backtest.hpp>
+#include <allocators/chained_alloc.hpp>
+#include <allocators/with_lookback.hpp>
+#include <allocators/with_rebalance.hpp>
 
 
 namespace bt {
 
-class strategy : public asset_alloc {
+class strategy : public chained_alloc {
  private:
-    asset_alloc *alloc;
-
- protected:
-    weight algo(price_t const &) override { return 0; }
+    bool rebalancing_set = false;
 
  public:
-    weight on_hist(price_t const &price_hist) override = 0;
-
-    virtual strategy &rebalance_every(size_t) {
+    virtual strategy &look_back(size_t m) {
+        if (rebalancing_set) {  // rebalancing must run first
+            auto my_rebalanced_alloc =
+                static_cast<chained_alloc*>(get_next());
+            auto lookback_alloc =
+                new with_lookback(my_rebalanced_alloc->get_next(), m);
+            my_rebalanced_alloc->set_next(lookback_alloc);
+        } else {
+            // std::cout << std::endl << "   >> SETTING LOOKBACK ";
+            set_next(new with_lookback(get_next(), m));
+        }
         return *this;
     }
 
-    virtual strategy &set_lookback(size_t) {
+    virtual strategy &rebalance_every(size_t n) {
+        set_next(new with_rebalance(get_next(), n));
+        rebalancing_set = true;
         return *this;
-    }
-
-    strategy &set_alloc(asset_alloc *alloc) {
-        this->alloc = alloc;
-        return *this;
-    }
-
-    asset_alloc *get_alloc() {
-        return this->alloc;
     }
 
     explicit strategy(asset_alloc *alloc)
-        : alloc(alloc) {}
-
-    ~strategy() {
-        delete alloc;
-    }
+        : chained_alloc(alloc) {}
 };
 }  // namespace bt

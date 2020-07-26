@@ -8,8 +8,7 @@
 #include <iostream>
 #include <numeric>
 
-#include <rebalance.hpp>
-#include <lookback.hpp>
+#include <strategy.hpp>
 #include <allocators/lambda_alloc.hpp>
 #include <utils.hpp>
 
@@ -31,8 +30,8 @@ SCENARIO("Rebalancing with lookback", "[rebalace][lookback]") {
         size_t const m_lb = 2;
 
         auto alloc_rule = new bt::lambda_alloc(test_rule);
-        auto strat = bt::rebalance(alloc_rule, n_rb);
-        strat.set_lookback(m_lb);
+        auto strat = bt::strategy(alloc_rule)
+            .rebalance_every(n_rb).look_back(m_lb);
 
         WHEN("history is less then the rebalancing period") {
             bt::price_t const hist_slice(price_hist.begin(),
