@@ -20,7 +20,7 @@ target_link_libraries (TestAll BacktesterHpp)
 #   New features test bench
 add_executable (TestFeature
     test_main.cpp
-    test_bench.cpp)
+    testbench.cpp)
 
 target_include_directories (TestFeature PUBLIC ../inc)
 target_include_directories (TestFeature PUBLIC ./lib)
