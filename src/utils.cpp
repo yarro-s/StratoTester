@@ -18,7 +18,7 @@ namespace bt {
 
 std::time_t str_to_time(std::string const &time_str,
                         std::string const &time_fmt) {
-    struct std::tm tm{0};
+    std::tm tm = std::tm();
 
     std::istringstream ss(time_str);
     ss >> std::get_time(&tm, time_fmt.c_str());
@@ -27,7 +27,7 @@ std::time_t str_to_time(std::string const &time_str,
 }
 
 std::string str_rep(time_t const &t_stamp, std::string const &time_fmt) {
-    struct std::tm tm{0};
+    std::tm tm = std::tm();
     localtime_r(&t_stamp, &tm);
 
     char buff[BT_N_TIME_STRLEN]{0};
