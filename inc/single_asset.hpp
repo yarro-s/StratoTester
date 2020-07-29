@@ -34,7 +34,7 @@ class single_asset : public backtest {
     single_asset &run(price_t const &pT);
 
     explicit single_asset(asset_alloc &a_alloc)
-        : single_asset(a_alloc, 1.0e18) {}
+        : single_asset(a_alloc, 1.0e12) {}
 
     single_asset(asset_alloc &a_alloc, price initial_deposit)
         : book(initial_deposit), a_alloc(a_alloc) {
