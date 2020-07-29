@@ -6,10 +6,36 @@
  */
 
 #ifndef _SRC_BLOCK
+#include <iomanip>
+
 #include <utils.hpp>
 #endif
 
+#define BT_N_TIME_STRLEN 20
+
+
 namespace bt {
+
+std::time_t str_to_time(std::string const &time_str,
+                        std::string const &time_fmt) {
+    struct std::tm tm{0};
+
+    std::istringstream ss(time_str);
+    ss >> std::get_time(&tm, time_fmt.c_str());
+
+    return mktime(&tm);
+}
+
+std::string str_rep(time_t const &t_stamp, std::string const &time_fmt) {
+    struct std::tm tm{0};
+    localtime_r(&t_stamp, &tm);
+
+    char buff[BT_N_TIME_STRLEN]{0};
+
+    strftime(buff, BT_N_TIME_STRLEN, time_fmt.c_str(), &tm);
+    return std::string(buff);
+}
+
 std::string str_rep(balance_book const &book) {
     std::stringstream rep;
 
@@ -20,18 +46,6 @@ std::string str_rep(balance_book const &book) {
 
 std::string str_rep(t_series<double> const &ts) {
     std::stringstream rep;
-
-    auto const t_stamp_to_str =
-    [](std::time_t const &t_stamp) {
-        struct tm *timeinfo;
-        size_t const n_t = 9;
-        char buffer[9];
-
-        timeinfo = localtime(&t_stamp);
-        strftime(buffer, n_t, "%D", timeinfo);
-
-        return std::string(buffer);
-    };
 
     rep << "         ";
 
@@ -45,7 +59,7 @@ std::string str_rep(t_series<double> const &ts) {
         auto const idXT = std::distance(
             ts.timing().begin(), t_stamp);
 
-        rep << t_stamp_to_str(*t_stamp);
+        rep << str_rep(*t_stamp);
 
         for (auto const &tckr : ts.tickers()) {
             rep << " " << ts.vals_for(tckr).at(idXT);

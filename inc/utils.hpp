@@ -19,6 +19,13 @@
 
 
 namespace bt {
+
+std::time_t str_to_time(std::string const &time_str,
+                        std::string const &time_fmt = "%D");
+
+std::string str_rep(time_t const &t_stamp,
+                    std::string const &time_fmt = "%D");
+
 std::string str_rep(balance_book const &book);
 
 std::string str_rep(t_series<double> const &ts);
