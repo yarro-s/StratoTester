@@ -21,8 +21,8 @@ TEST_CASE("Changing portfolio", "[single_asset][result]") {
 
     SECTION("Arbitrary weights") {
         bt::price const init_cash = 10000;
-        bt::price_t pT{000, 75.2, 125.3, 36.8,  305,  145,  8.5, 45.3};
-        bt::weight_t wT{    0.24,  0.26, 0.52, 0.73, 0.61, 0.44,  000};
+        bt::price_t pT{ 75.2, 125.3, 36.8,  305,  145,  8.5, 45.3};
+        bt::weight_t wT{0.24,  0.26, 0.52, 0.73, 0.61, 0.44, 0.79};
 
         bt::weight_alloc strat(wT);
         bt::single_asset back_test(strat, init_cash);
@@ -30,7 +30,7 @@ TEST_CASE("Changing portfolio", "[single_asset][result]") {
         auto res = back_test.run(pT).results();
 
         auto const pv_expected =
-            "[10000, 11553.1, 9517.6, 45456.4, 28176.4, 12069.4, 35032.6]";
+            "[10000, 10000, 8318.5, 23874.1, 17474.1, 5598.6, 20355.4]";
 
         REQUIRE(pv_expected == bt::str_rep(res.pv()));
     }
@@ -67,8 +67,8 @@ TEST_CASE("Buy and hold portfolio", "[single_asset][result]") {
 
         auto res = back_test.run(pT).results();
 
-        auto n_asset_expected = trunc(init_deposit * w / pT[1]);
-        auto cash_expected = init_deposit - n_asset_expected * pT[1];
+        auto n_asset_expected = trunc(init_deposit * w / pT[0]);
+        auto cash_expected = init_deposit - n_asset_expected * pT[0];
 
         auto const end_val_expected =
             n_asset_expected * pT.back() + cash_expected;
