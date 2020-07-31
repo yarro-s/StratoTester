@@ -21,8 +21,16 @@ class single_asset : public backtest {
     balance_book book;
     asset_alloc &a_alloc;
 
+    weight _last_w;
+
+    void reset() {
+        book.reset();
+        res.reset();
+        _last_w = 0.0;
+    }
+
  public:
-    result const &results() {
+    result results() {
         return res;
     }
 
@@ -38,6 +46,7 @@ class single_asset : public backtest {
 
     single_asset(asset_alloc &a_alloc, price initial_deposit)
         : book(initial_deposit), a_alloc(a_alloc) {
+        reset();
         a_alloc.set_model(this);
     }
 };

@@ -19,10 +19,18 @@ namespace bt {
 class balance_book {
  private:
     price cash_;
-    int n_asset_ = 0;
-    price curr_mkt_price = 0;
+    int n_asset_;
+    price curr_mkt_price;
+
+    price _init_depo;
 
  public:
+    void reset() {
+        cash_ = _init_depo;
+        n_asset_ = 0;
+        curr_mkt_price = 0;
+    }
+    
     price mkt_price() const {
         return curr_mkt_price;
     }
@@ -68,7 +76,9 @@ class balance_book {
     }
 
     explicit balance_book(price init_depo)
-        : cash_(init_depo) {}
+        : _init_depo(init_depo) {
+        reset();
+    }
 
  private:
     void take_at(int amount, price vol) {

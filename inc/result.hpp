@@ -21,6 +21,11 @@ class result {
     price_t pvT;
 
  public:
+    void reset() {
+        wT.clear();
+        pvT.clear();
+    }
+
     void save(balance_book const &book) {
         wT.push_back(book.asset_value() / book.mkt_value());
         pvT.push_back(book.mkt_value());
