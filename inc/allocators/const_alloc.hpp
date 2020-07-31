@@ -32,10 +32,15 @@ class const_alloc : public asset_alloc {
         auto const wT = algo(price_hist);
 
         if (!has_updated) {  // call once
+            upd_model(0, wT);  // push thru the update
             upd_model(price_hist.back(), wT);
 
             has_updated = true;
         }
+
+        // std::cout << std::endl
+        //           << ">>CONST W PT: " << str_rep(price_hist) << " => "
+        //           << wT << std::endl;
         return wT;
     }
 
