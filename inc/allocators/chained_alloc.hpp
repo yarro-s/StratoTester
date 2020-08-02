@@ -27,9 +27,7 @@ class chained_alloc : public asset_alloc {
         return *this;
     }
 
-    asset_alloc *get_next() {
-        return this->next_alloc;
-    }
+    asset_alloc *get_next() { return this->next_alloc; }
 
     weight on_hist(prices const &price_hist) override {
         weight wT = algo(price_hist);

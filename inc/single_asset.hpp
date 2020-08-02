@@ -23,19 +23,17 @@ class single_asset : public backtest {
 
     weight _last_w;
 
-    void reset() {
+    void reset() noexcept {
         book.reset();
         res.reset();
         _last_w = 0.0;
     }
 
  public:
-    result results() {
-        return res;
-    }
+    result results() noexcept { return res; }
 
-    timed_result results(time_frame tf) {
-        return timed_result(res, tf);
+    timed_result results(time_frame tf) noexcept { 
+        return timed_result(res, tf); 
     }
 
     single_asset &update(price px, weight w);

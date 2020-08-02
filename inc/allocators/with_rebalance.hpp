@@ -27,8 +27,6 @@ class with_rebalance : public chained_alloc {
         } else {
             return 0.0;
         }
-
-        
     }
 
     with_rebalance(asset_alloc *next_alloc, size_t n_rebalance)

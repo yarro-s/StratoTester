@@ -24,9 +24,7 @@ class const_alloc : public asset_alloc {
     weight const weight_;
 
  protected:
-    weight algo(prices const &) override {
-        return weight_;
-    }
+    weight algo(prices const &) override { return weight_; }
 
     weight on_hist(prices const &price_hist) override {
         auto const wT = algo(price_hist);

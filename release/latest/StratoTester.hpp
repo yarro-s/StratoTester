@@ -108,32 +108,22 @@ class balance_book {
         curr_mkt_price = 0;
     }
 
-    price mkt_price() const {
-        return curr_mkt_price;
-    }
+    price mkt_price() const { return curr_mkt_price; }
 
     balance_book &mkt_price(price px) {
         curr_mkt_price = px;
         return *this;
     }
 
-    price cash() const {
-        return cash_;
-    }
+    price cash() const noexcept { return cash_; }
 
-    int n_asset() const {
-        return n_asset_;
-    }
+    int n_asset() const noexcept { return n_asset_; }
 
-    price asset_value() const {
-        return n_asset() * mkt_price();
-    }
+    price asset_value() const noexcept { return n_asset() * mkt_price(); }
 
-    price mkt_value() const {
-        return cash() + asset_value();
-    }
+    price mkt_value() const noexcept { return cash() + asset_value(); }
 
-    balance_book &sell(size_t amount) {
+    balance_book &sell(size_t amount) noexcept {
         auto const vol = -(static_cast<int>(amount) * mkt_price());
 
         if (static_cast<int>(amount) <= n_asset()
@@ -143,7 +133,7 @@ class balance_book {
         return *this;
     }
 
-    balance_book &buy(size_t amount) {
+    balance_book &buy(size_t amount) noexcept {
         auto const vol = amount * mkt_price();
 
         if (vol <= cash()) {
@@ -152,13 +142,13 @@ class balance_book {
         return *this;
     }
 
-    explicit balance_book(price init_depo)
+    explicit balance_book(price init_depo) noexcept
         : _init_depo(init_depo) {
         reset();
     }
 
  private:
-    void take_at(int amount, price vol) {
+    void take_at(int amount, price vol) noexcept {
         n_asset_ += amount;
         cash_ -= vol;
     }
@@ -230,29 +220,23 @@ class result {
     prices pvT;
 
  public:
-    void reset() {
+    void reset() noexcept {
         wT.clear();
         pvT.clear();
     }
 
-    void save(balance_book const &book) {
+    void save(balance_book const &book) noexcept {
         wT.push_back(book.asset_value() / book.mkt_value());
         pvT.push_back(book.mkt_value());
     }
 
-    weights const &wt() const {
-        return wT;
-    }
+    weights const &wt() const noexcept { return wT; }
 
-    prices const &pv() const {
-        return pvT;
-    }
+    prices const &pv() const noexcept { return pvT; }
 
-    price growth() const {
-        return pv().back() / pv().front();
-    }
+    price growth() const noexcept { return pv().back() / pv().front(); }
 
-    price max_drawdown() const;
+    price max_drawdown() const noexcept;
 };
 
 class timed_result : public result {
@@ -260,14 +244,13 @@ class timed_result : public result {
     time_frame const t_frame;
 
  public:
-    price cagr() const {
+    price cagr() const noexcept {
         auto const n_samples = pv().size();
-        float const n_years = n_samples * t_frame /
-                                tf::year;
+        float const n_years = n_samples * t_frame / tf::year;
         return pow(growth(), 1.0 / n_years) - 1;
     }
 
-    timed_result(result res, time_frame tf)
+    timed_result(result res, time_frame tf) noexcept
         : result(res), t_frame(tf) {}
 };
 }
@@ -283,18 +266,16 @@ class single_asset : public backtest {
 
     weight _last_w;
 
-    void reset() {
+    void reset() noexcept {
         book.reset();
         res.reset();
         _last_w = 0.0;
     }
 
  public:
-    result results() {
-        return res;
-    }
+    result results() noexcept { return res; }
 
-    timed_result results(time_frame tf) {
+    timed_result results(time_frame tf) noexcept {
         return timed_result(res, tf);
     }
 
@@ -328,9 +309,7 @@ class chained_alloc : public asset_alloc {
         return *this;
     }
 
-    asset_alloc *get_next() {
-        return this->next_alloc;
-    }
+    asset_alloc *get_next() { return this->next_alloc; }
 
     weight on_hist(prices const &price_hist) override {
         weight wT = algo(price_hist);
@@ -391,8 +370,6 @@ class with_rebalance : public chained_alloc {
         } else {
             return 0.0;
         }
-
-
     }
 
     with_rebalance(asset_alloc *next_alloc, size_t n_rebalance)
@@ -467,9 +444,7 @@ class const_alloc : public asset_alloc {
     weight const weight_;
 
  protected:
-    weight algo(prices const &) override {
-        return weight_;
-    }
+    weight algo(prices const &) override { return weight_; }
 
     weight on_hist(prices const &price_hist) override {
         auto const wT = algo(price_hist);
@@ -521,7 +496,7 @@ class lambda_alloc : public asset_alloc {
 
 #ifdef STRATOTESTER_IMPL
 namespace st {
-price result::max_drawdown() const {
+price result::max_drawdown() const noexcept {
     price max_dd = 0.0,
           gmax = 0.0,
           gmin = 0.0;

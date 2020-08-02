@@ -10,7 +10,7 @@
 #endif
 
 namespace st {
-price result::max_drawdown() const {
+price result::max_drawdown() const noexcept {
     price max_dd = 0.0,
           gmax = 0.0,
           gmin = 0.0;

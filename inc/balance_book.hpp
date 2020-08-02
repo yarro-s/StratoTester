@@ -30,33 +30,23 @@ class balance_book {
         n_asset_ = 0;
         curr_mkt_price = 0;
     }
-    
-    price mkt_price() const {
-        return curr_mkt_price;
-    }
+
+    price mkt_price() const { return curr_mkt_price; }
 
     balance_book &mkt_price(price px) {
         curr_mkt_price = px;
         return *this;
     }
 
-    price cash() const {
-        return cash_;
-    }
+    price cash() const noexcept { return cash_; }
 
-    int n_asset() const {
-        return n_asset_;
-    }
+    int n_asset() const noexcept { return n_asset_; }
 
-    price asset_value() const {
-        return n_asset() * mkt_price();
-    }
+    price asset_value() const noexcept { return n_asset() * mkt_price(); }
 
-    price mkt_value() const {
-        return cash() + asset_value();
-    }
+    price mkt_value() const noexcept { return cash() + asset_value(); }
 
-    balance_book &sell(size_t amount) {
+    balance_book &sell(size_t amount) noexcept {
         auto const vol = -(static_cast<int>(amount) * mkt_price());
 
         if (static_cast<int>(amount) <= n_asset()
@@ -66,7 +56,7 @@ class balance_book {
         return *this;
     }
 
-    balance_book &buy(size_t amount) {
+    balance_book &buy(size_t amount) noexcept {
         auto const vol = amount * mkt_price();
 
         if (vol <= cash()) {
@@ -75,13 +65,13 @@ class balance_book {
         return *this;
     }
 
-    explicit balance_book(price init_depo)
+    explicit balance_book(price init_depo) noexcept
         : _init_depo(init_depo) {
         reset();
     }
 
  private:
-    void take_at(int amount, price vol) {
+    void take_at(int amount, price vol) noexcept {
         n_asset_ += amount;
         cash_ -= vol;
     }
