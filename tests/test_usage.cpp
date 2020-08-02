@@ -76,7 +76,7 @@ TEST_CASE("Basic usage showcases", "[usage]") {
         st::single_asset back_test(strat, init_deposit);
         auto res = back_test.run(price_hist).results();
 
-        auto const res_expected = 
+        auto const res_expected =
             "[1000, 1010.4, 674, 1439.6, 2819.2, 726]";
 
         REQUIRE(res_expected == st::str_rep(res.value_history()));
