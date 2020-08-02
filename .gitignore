@@ -3,3 +3,4 @@ build/
 .vscode/
 lib/
 release/latest/StratoTester.hpp
+tests/model/*
