@@ -18,20 +18,20 @@ namespace bt {
 
 class weight_alloc : public asset_alloc {
  private:
-    weights const &weights;
+    weights const &weight_hist;
 
  public:
-    weight algo(prices const &prices) noexcept {
-        size_t idx_weight = (prices.size() - 1) % weights.size();
+    weight algo(prices const &price_hist) noexcept {
+        size_t idx_weight = (price_hist.size() - 1) % weight_hist.size();
 
         // std::cout << std::endl
-        //           << ">>W PT: " << str_rep(prices) << " => "
-        //           << weights[idx_weight] << std::endl;
-        return weights[idx_weight];
+        //           << ">>W PT: " << str_rep(price_hist) << " => "
+        //           << weight_hist[idx_weight] << std::endl;
+        return weight_hist[idx_weight];
     }
 
-    explicit weight_alloc(weights const &weights) noexcept
-        : weights(weights) {}
+    explicit weight_alloc(weights const &weight_hist) noexcept
+        : weight_hist(weight_hist) {}
 
     ~weight_alloc() {}
 };

@@ -18,13 +18,13 @@ SCENARIO("Specified weight allocation",
     GIVEN("Price history with corresponding weights") {
         bt::prices const price_hist {
             100.0, 200.5,  10.5, 300.1};
-        bt::weights const weights {
+        bt::weights const weight_hist {
               0.2,   0.8,  -0.5,   0.7};
 
-        bt::weight_alloc w_alloc(weights);
+        bt::weight_alloc w_alloc(weight_hist);
 
         WHEN("first price fetched") {
-            auto const &p0 = bt::price_ts(
+            auto const &p0 = bt::prices(
                 price_hist.begin(), price_hist.begin()+1);
 
             REQUIRE(p0.back() == price_hist.front());
@@ -32,12 +32,12 @@ SCENARIO("Specified weight allocation",
             bt::weight const w0 = w_alloc.on_hist(p0);
 
             THEN("first weight returned") {
-                REQUIRE(w0 == weights.front());
+                REQUIRE(w0 == weight_hist.front());
             }
         }
 
         WHEN("third price fetched") {
-            auto const &p02 = bt::price_ts(
+            auto const &p02 = bt::prices(
                 price_hist.begin(), price_hist.begin() + 3);
 
             REQUIRE(p02.back() == price_hist[2]);
@@ -45,12 +45,12 @@ SCENARIO("Specified weight allocation",
             bt::weight const w1 = w_alloc.on_hist(p02);
 
             THEN("third weight returned") {
-                REQUIRE(w1 == weights[2]);
+                REQUIRE(w1 == weight_hist[2]);
             }
         }
 
         WHEN("last price fetched") {
-            auto const &p0N = bt::price_ts(
+            auto const &p0N = bt::prices(
                 price_hist.begin(), price_hist.end());
 
             REQUIRE(p0N.back() == price_hist.back());
@@ -58,7 +58,7 @@ SCENARIO("Specified weight allocation",
             bt::weight const wN = w_alloc.on_hist(p0N);
 
             THEN("last weight returned") {
-                REQUIRE(wN == weights.back());
+                REQUIRE(wN == weight_hist.back());
             }
         }
     }
@@ -69,13 +69,13 @@ SCENARIO("Weights with some incorrect values are given",
     GIVEN("Price history and incorrect weights") {
         bt::prices const price_hist {
             500.0, 10.5, 1000.1, 850.5,  10};
-        bt::weights const weights {
+        bt::weights const weight_hist {
               0.2,  1.4,    150,  -8.5, 0.8};
 
-        bt::weight_alloc w_alloc(weights);
+        bt::weight_alloc w_alloc(weight_hist);
 
         WHEN("price for an incorrect positive weight fetched") {
-            auto const &p01 = bt::price_ts(
+            auto const &p01 = bt::prices(
                 price_hist.begin(), price_hist.begin() + 2);
 
             REQUIRE(p01.back() == price_hist[1]);
@@ -88,7 +88,7 @@ SCENARIO("Weights with some incorrect values are given",
         }
 
         WHEN("price for an incorrect negative weight fetched") {
-            auto const &p03 = bt::price_ts(
+            auto const &p03 = bt::prices(
                 price_hist.begin(), price_hist.begin() + 4);
 
             REQUIRE(p03.back() == price_hist[3]);
@@ -108,22 +108,22 @@ SCENARIO("Weight allocation on randomized weights",
         bt::prices const price_hist {
             100.0, 200.5,  10.5, 300.1, 32.5, 785.3, 43.5, 40.6,
               70.5, 143.4, 345.6, 42.5, 106.5};
-        bt::weights const weights {
+        bt::weights const weight_hist {
               0.2,   0.8,  -0.5,   0.7,  2.5,   1.0,  0.7, -1.0,
               -2.5,  -0.8,   0.9,  6.4,  0.5};
 
-        bt::weight_alloc w_alloc(weights);
+        bt::weight_alloc w_alloc(weight_hist);
 
         WHEN("i-th price fetched") {
             for (auto pT = price_hist.begin() + 1;
                  pT != price_hist.end(); ++pT) {
-                auto const &p0T = bt::price_ts(price_hist.begin(), pT);
+                auto const &p0T = bt::prices(price_hist.begin(), pT);
 
                 bt::weight const wT = w_alloc.on_hist(p0T);
 
                 const auto idxw =
                     std::distance(price_hist.begin(), pT - 1);
-                auto w_expected = weights[idxw];
+                auto w_expected = weight_hist[idxw];
 
                 if (abs(w_expected) > 1.0) {   // clip to ±1.0
                     w_expected = w_expected > 0 ? 1.0 : -1.0;

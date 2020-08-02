@@ -46,7 +46,7 @@ single_asset &single_asset::run(prices const &pT) {
     reset();
     
     for (auto p = pT.begin(); p != pT.end(); ++p) {
-        auto const &roll_wnd = price_ts(pT.begin(), p + 1);
+        auto const &roll_wnd = prices(pT.begin(), p + 1);
 
         book.mkt_price(*p);
         a_alloc.on_hist(roll_wnd);
