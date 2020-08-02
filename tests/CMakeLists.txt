@@ -31,7 +31,8 @@ target_link_libraries (TestFeature StratoTester)
 #   For testing real-world usage with the header-only version
 add_executable (TestReal 
     test_main.cpp
-    test_usage.cpp)
+    test_usage.cpp
+    test_docs.cpp)
 
 target_include_directories (TestReal PUBLIC ../release)
 target_include_directories (TestReal PUBLIC ./lib)
