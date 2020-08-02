@@ -10,7 +10,7 @@
 #include <iostream>
 #include <catch2/catch.hpp>
 
-#include <latest/StratoTester.hpp>  // #include "StratoTester.hpp"
+#include <StratoTester.hpp>  // #include "StratoTester.hpp"
 
 using namespace st;
 
@@ -38,17 +38,15 @@ TEST_CASE("Docs tests", "[usage]") {
             .rebalance_every(2);    // rebanace every 2 months
 
         auto init_deposit = 10000;
-        auto test = st::single_asset(strat, init_deposit);
-
-        auto const test_res = test.run(qqq_hist).results();
+        auto test = st::single_asset(strat, init_deposit).run(qqq_hist);
 
         std::cout << std::endl <<
                 "Single asset portfolio value history: " << std::endl <<
                 "   " <<
-                str_rep(test_res.value_history()) << std::endl;
+                str_rep(test.results().value_history()) << std::endl;
         std::cout << std::endl <<
                 "Single asset portfolio total return: " <<
-                test_res.total_return() << std::endl;
+                test.results().total_return() << std::endl;
     }
 }
 

@@ -12,7 +12,7 @@
 
 
 #define STRATOTESTER_IMPL
-#include <latest/StratoTester.hpp>
+#include <StratoTester.hpp>
 
 st::t_series<st::price> read_from_csv(
     std::string const &datapath,
