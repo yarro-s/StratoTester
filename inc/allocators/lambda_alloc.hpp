@@ -26,11 +26,6 @@ class lambda_alloc : public asset_alloc {
         return fa(price_hist);
     }
 
-    lambda_alloc()
-        : fa([](prices const &) {
-            // std::cout << "DEFAULT ALGO LAMBDA!" << std::endl;
-            return 0.0; }) {}
-
-    explicit lambda_alloc(algo_lambda fa) : fa(fa) {}
+    explicit lambda_alloc(algo_lambda const &fa) : fa(fa) {}
 };
 }  // namespace st
