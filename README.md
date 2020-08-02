@@ -53,12 +53,10 @@ auto test = st::single_asset(strat, init_deposit).run(qqq_hist);
 and log some of the results
 
 ```C++
-std::cout << std::endl
-          << "Single asset portfolio value history: " << std::endl
-          << "   " << str_rep(test.results().value_history())
+std::cout << "Single asset portfolio value history: " << std::endl
+          << str_rep(test.results().value_history())
           << std::endl;
-std::cout << std::endl
-          << "Single asset portfolio total return: "
+std::cout << "Single asset portfolio total return: "
           << test.results().total_return() << std::endl;
 ```
 
