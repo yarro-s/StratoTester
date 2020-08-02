@@ -98,14 +98,14 @@ TEST_CASE("Real data", "[usage]") {
             .results();
 
         std::cout << std::endl
-                  << "TOTAL RET: " << test_res.growth() << std::endl;
+                  << "TOTAL RET: " << test_res.total_return() << std::endl;
 
         // std::cout << std::endl
         //           << "HIST: " << st::str_rep(price_hist) << std::endl;
         // std::cout << std::endl
-        //           << "PV: " << st::str_rep(test_res.pv()) << std::endl;
+        //           << "PV: " << st::str_rep(test_res.value_history()) << std::endl;
         // std::cout << std::endl
-        //           << "W: " << st::str_rep(test_res.wt()) << std::endl;
+        //           << "W: " << st::str_rep(test_res.asset_weights()) << std::endl;
     }
 
     // SECTION("Buy and hold NDX") {
@@ -117,7 +117,7 @@ TEST_CASE("Real data", "[usage]") {
     //         .results();
 
     //     std::cout << std::endl
-    //               << "TOTAL RET: " << test_res.growth() << std::endl;
+    //               << "TOTAL RET: " << test_res.total_return() << std::endl;
     // }
 }
 

@@ -60,7 +60,7 @@ TEST_CASE("Real-world data showcase", "[usage]") {
             test.run(ts.vals_for(dataset_name)).results();
 
         std::cout << std::endl
-                  << "TOTAL RET: " << test_res.growth() << std::endl;
+                  << "TOTAL RET: " << test_res.total_return() << std::endl;
     }
 }
 
@@ -76,8 +76,9 @@ TEST_CASE("Basic usage showcases", "[usage]") {
         st::single_asset back_test(strat, init_deposit);
         auto res = back_test.run(price_hist).results();
 
-        auto const res_expected = "[1000, 663.6, 1429.2, 2808.8, 715.6]";
+        auto const res_expected = 
+            "[1000, 1010.4, 674, 1439.6, 2819.2, 726]";
 
-        REQUIRE(res_expected == st::str_rep(res.pv()));
+        REQUIRE(res_expected == st::str_rep(res.value_history()));
     }
 }

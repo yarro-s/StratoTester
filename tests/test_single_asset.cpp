@@ -32,7 +32,7 @@ TEST_CASE("Changing portfolio", "[single_asset][result]") {
         auto const pv_expected =
             "[10000, 10000, 8318.5, 23874.1, 17474.1, 5598.6, 20355.4]";
 
-        REQUIRE(pv_expected == st::str_rep(res.pv()));
+        REQUIRE(pv_expected == st::str_rep(res.value_history()));
     }
 
     SECTION("Changing weight and asset price") {
@@ -51,7 +51,7 @@ TEST_CASE("Changing portfolio", "[single_asset][result]") {
             n_asset_expected * pT.back() + cash_expected;
 
         REQUIRE(Approx(end_val_expected / init_deposit)
-                == res.growth());
+                == res.total_return());
     }
 }
 
@@ -74,7 +74,7 @@ TEST_CASE("Buy and hold portfolio", "[single_asset][result]") {
             n_asset_expected * pT.back() + cash_expected;
 
         CHECK(Approx(end_val_expected / init_deposit)
-                == res.growth());
+                == res.total_return());
     }
 
     SECTION("Constant price, constant weight") {
@@ -86,6 +86,6 @@ TEST_CASE("Buy and hold portfolio", "[single_asset][result]") {
 
         auto res = back_test.run(pT).results();
 
-        REQUIRE(1.0 == res.growth());
+        REQUIRE(1.0 == res.total_return());
     }
 }

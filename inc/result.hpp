@@ -31,11 +31,13 @@ class result {
         pvT.push_back(book.mkt_value());
     }
 
-    weights const &wt() const noexcept { return wT; }
+    weights const &asset_weights() const noexcept { return wT; }
 
-    prices const &pv() const noexcept { return pvT; }
+    prices const &value_history() const noexcept { return pvT; }
 
-    price growth() const noexcept { return pv().back() / pv().front(); }
+    price total_return() const noexcept {
+        return value_history().back() / value_history().front();
+    }
 
     price max_drawdown() const noexcept;
 };
@@ -46,9 +48,9 @@ class timed_result : public result {
 
  public:
     price cagr() const noexcept {
-        auto const n_samples = pv().size();
+        auto const n_samples = value_history().size();
         float const n_years = n_samples * t_frame / tf::year;
-        return pow(growth(), 1.0 / n_years) - 1;
+        return pow(total_return(), 1.0 / n_years) - 1;
     }
 
     timed_result(result res, time_frame tf) noexcept

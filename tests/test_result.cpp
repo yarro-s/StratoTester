@@ -34,12 +34,12 @@ SCENARIO("Results of transactions", "[result]") {
             const auto cash_left = book.cash();
 
             THEN("the resulting PV is saved") {
-                REQUIRE(res.pv().back() == init_deposit);
+                REQUIRE(res.value_history().back() == init_deposit);
             }
 
             THEN("the resulting weight is saved") {
                 st::price const val = px * amount;
-                REQUIRE(res.wt().back() == val / init_deposit);
+                REQUIRE(res.asset_weights().back() == val / init_deposit);
             }
 
             WHEN("Market price goes up") {
@@ -49,13 +49,13 @@ SCENARIO("Results of transactions", "[result]") {
                 res.save(book.mkt_price(px));
 
                 THEN("the stored PV goes up") {
-                    REQUIRE(res.pv().back() > res.pv()[0]);
-                    REQUIRE(res.pv().back() == new_val + cash_left);
+                    REQUIRE(res.value_history().back() > res.value_history()[0]);
+                    REQUIRE(res.value_history().back() == new_val + cash_left);
                 }
 
                 THEN("the stored weight increases") {
-                    REQUIRE(res.wt().back() > res.wt()[0]);
-                    REQUIRE(res.wt().back() ==
+                    REQUIRE(res.asset_weights().back() > res.asset_weights()[0]);
+                    REQUIRE(res.asset_weights().back() ==
                             new_val / (new_val + cash_left));
                 }
             }
@@ -67,13 +67,13 @@ SCENARIO("Results of transactions", "[result]") {
                 res.save(book.mkt_price(px));
 
                 THEN("the stored PV goes down") {
-                    REQUIRE(res.pv().back() < res.pv()[0]);
-                    REQUIRE(res.pv().back() == new_val + cash_left);
+                    REQUIRE(res.value_history().back() < res.value_history()[0]);
+                    REQUIRE(res.value_history().back() == new_val + cash_left);
                 }
 
                 THEN("the stored weight decreases") {
-                    REQUIRE(res.wt().back() < res.wt()[0]);
-                    REQUIRE(res.wt().back() ==
+                    REQUIRE(res.asset_weights().back() < res.asset_weights()[0]);
+                    REQUIRE(res.asset_weights().back() ==
                             new_val / (new_val + cash_left));
                 }
             }

@@ -23,10 +23,10 @@ int main() {
     auto res = back_test.run(pT).results();
 
     std::cout << std::endl
-                << " >>> PV(T) = " << st::str_rep(res.pv())
+                << " >>> PV(T) = " << st::str_rep(res.value_history())
                 << std::endl;
     std::cout << std::endl
-                << " >>> W(T) = " << st::str_rep(res.wt())
+                << " >>> W(T) = " << st::str_rep(res.asset_weights())
                 << std::endl;
 }
 
@@ -44,6 +44,6 @@ int main() {
     // auto res = back_test.run(pT).results();
 
     // std::cout << std::endl
-    //             << st::str_rep(res.pv()) << std::endl;
+    //             << st::str_rep(res.value_history()) << std::endl;
 }
 */
