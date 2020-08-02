@@ -19,10 +19,10 @@ auto qqq_hist = st::prices {168.16, 173.19, 179.66, 189.54, 173.95, 186.74,
                             191.10, 187.47, 188.81, 197.08, 205.10, 212.61};
 ```
 
-Let's implement a simple momentum trading rule 
+Let's implement a simple momentum trading rule:  
 
 ```C++
-auto last_close_up = [&](prices const &price_hist) {
+auto last_close_up = [=](prices const &price_hist) {
     auto const last_close = price_hist.back();
     auto const first_close = price_hist.front();
 
@@ -31,15 +31,17 @@ auto last_close_up = [&](prices const &price_hist) {
 };
 ```
 
-Next, let's create a strategy based on the rule
+A trading rule takes a rolling price history and calculates ```weight``` in the range from ```-1.0``` to ```1.0```. For instance, returning ```0.5``` means that the currently required share  of the asset in the portfolio is 50% while returning ```-0.2``` means that 20% of the portfolio is used for shorting the asset.
+
+Next, let's create a strategy based on that rule
 
 ```C++
 auto strat = strategy::with(last_close_up)
                 .look_back(3)         // 3 samples rolling window
-                .rebalance_every(2);  // rebanace every 2 samples
+                .rebalance_every(2);  // rebalanace every 2 samples
 ```
 
-We specified a 3 sample rolling window with ```look_back(3)``` with the asset rebalancing done every 2 samples. The samples hold the monthly closing prices of QQQ.
+We specified a three-sample rolling window with ```look_back(3)```. Asset rebalancing, specified as ```rebalance_every(2)```, is done every two samples. The samples here hold the monthly closing prices of QQQ for the year 2019.
 
 Let's run this strategy with an initial deposit of $10000
 
@@ -52,13 +54,15 @@ and log some of the results
 
 ```C++
 std::cout << std::endl
-                  << "Single asset portfolio value history: " << std::endl
-                  << "   " << str_rep(test.results().value_history())
-                  << std::endl;
+          << "Single asset portfolio value history: " << std::endl
+          << "   " << str_rep(test.results().value_history())
+          << std::endl;
 std::cout << std::endl
-            << "Single asset portfolio total return: "
-            << test.results().total_return() << std::endl;
+          << "Single asset portfolio total return: "
+          << test.results().total_return() << std::endl;
 ```
+
+After requesting the backtesting results with ```results()```, you can access all the historical values of the portfolio with ```value_history()``` and calculate its total return with ```total_return()```. 
 
 
 
