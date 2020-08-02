@@ -14,7 +14,7 @@ add_executable (TestAll
 target_include_directories (TestAll PUBLIC ../inc)
 target_include_directories (TestAll PUBLIC ./lib)
 
-target_link_libraries (TestAll BacktesterHpp)
+target_link_libraries (TestAll StratoTester)
 
 
 #   New features test bench
@@ -25,7 +25,7 @@ add_executable (TestFeature
 target_include_directories (TestFeature PUBLIC ../inc)
 target_include_directories (TestFeature PUBLIC ./lib)
 
-target_link_libraries (TestFeature BacktesterHpp)
+target_link_libraries (TestFeature StratoTester)
 
 
 #   For testing real-world usage with the header-only version

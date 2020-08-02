@@ -6,7 +6,7 @@ set (CMAKE_CXX_STANDARD_REQUIRED True)
 SET(GCC_COMPILE_FLAGS "-pedantic -Wall -Wextra")
 SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COMPILE_FLAGS}")
 
-project (BacktesterHpp VERSION 0.1)
+project (StratoTester VERSION 0.1)
 
 add_subdirectory (src) 
 add_subdirectory (tests)
