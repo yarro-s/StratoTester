@@ -34,5 +34,5 @@ add_executable (TestReal
     test_usage.cpp
     test_docs.cpp)
 
-target_include_directories (TestReal PUBLIC ../release)
+target_include_directories (TestReal PUBLIC ../release/latest)
 target_include_directories (TestReal PUBLIC ./lib)
