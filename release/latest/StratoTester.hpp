@@ -234,7 +234,9 @@ class result {
 
     prices const &value_history() const noexcept { return pvT; }
 
-    price total_return() const noexcept { return value_history().back() / value_history().front(); }
+    price total_return() const noexcept {
+        return value_history().back() / value_history().front();
+    }
 
     price max_drawdown() const noexcept;
 };
@@ -323,6 +325,22 @@ class chained_alloc : public asset_alloc {
 };
 }
 namespace st {
+using algo_lambda =
+    std::function<weight(prices const &)>;
+
+class lambda_alloc : public asset_alloc {
+ private:
+    std::function<weight(prices)> const fa;
+
+ public:
+    virtual weight algo(prices const &price_hist) {
+        return fa(price_hist);
+    }
+
+    explicit lambda_alloc(algo_lambda const &fa) : fa(fa) {}
+};
+}
+namespace st {
 
 class with_lookback : public chained_alloc {
  private:
@@ -406,6 +424,11 @@ class strategy : public chained_alloc {
 
     explicit strategy(asset_alloc *alloc)
         : chained_alloc(alloc) {}
+
+    static strategy with(algo_lambda const &alloc_rule) {
+        auto la = new lambda_alloc(alloc_rule);
+        return strategy(la);
+    }
 };
 }
 
@@ -467,25 +490,6 @@ class const_alloc : public asset_alloc {
         : weight_(w) {}
 
     ~const_alloc() {}
-};
-}
-
-
-
-namespace st {
-using algo_lambda =
-    std::function<weight(prices const &)>;
-
-class lambda_alloc : public asset_alloc {
- private:
-    std::function<weight(prices)> const fa;
-
- public:
-    virtual weight algo(prices const &price_hist) {
-        return fa(price_hist);
-    }
-
-    explicit lambda_alloc(algo_lambda const &fa) : fa(fa) {}
 };
 }
 

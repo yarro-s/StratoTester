@@ -12,6 +12,7 @@
 #endif
 
 #include <allocators/chained_alloc.hpp>
+#include <allocators/lambda_alloc.hpp>
 #include <allocators/with_lookback.hpp>
 #include <allocators/with_rebalance.hpp>
 
@@ -44,5 +45,10 @@ class strategy : public chained_alloc {
 
     explicit strategy(asset_alloc *alloc)
         : chained_alloc(alloc) {}
+
+    static strategy with(algo_lambda const &alloc_rule) {
+        auto la = new lambda_alloc(alloc_rule);
+        return strategy(la);
+    }
 };
 }  // namespace st
