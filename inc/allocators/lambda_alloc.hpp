@@ -15,19 +15,19 @@
 
 namespace bt {
 using algo_lambda =
-    std::function<weight(price_t const &)>;
+    std::function<weight(price_ts const &)>;
 
 class lambda_alloc : public asset_alloc {
  private:
-    std::function<weight(price_t)> const fa;
+    std::function<weight(price_ts)> const fa;
 
  public:
-    virtual weight algo(price_t const &price_hist) {
+    virtual weight algo(price_ts const &price_hist) {
         return fa(price_hist);
     }
 
     lambda_alloc()
-        : fa([](price_t const &) {
+        : fa([](price_ts const &) {
             // std::cout << "DEFAULT ALGO LAMBDA!" << std::endl;
             return 0.0; }) {}
 

@@ -19,8 +19,8 @@ using price = double;
 using weight = double;
 using volume = long long;
 
-using price_t = std::vector<price>;
-using weight_t = std::vector<weight>;
+using price_ts = std::vector<price>;
+using weight_ts = std::vector<weight>;
 
 using ticker = std::string;
 

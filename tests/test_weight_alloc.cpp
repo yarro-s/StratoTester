@@ -16,15 +16,15 @@
 SCENARIO("Specified weight allocation",
          "[weight_alloc][asset_alloc]") {
     GIVEN("Price history with corresponding weights") {
-        bt::price_t const price_hist {
+        bt::price_ts const price_hist {
             100.0, 200.5,  10.5, 300.1};
-        bt::weight_t const weights {
+        bt::weight_ts const weights {
               0.2,   0.8,  -0.5,   0.7};
 
         bt::weight_alloc w_alloc(weights);
 
         WHEN("first price fetched") {
-            auto const &p0 = bt::price_t(
+            auto const &p0 = bt::price_ts(
                 price_hist.begin(), price_hist.begin()+1);
 
             REQUIRE(p0.back() == price_hist.front());
@@ -37,7 +37,7 @@ SCENARIO("Specified weight allocation",
         }
 
         WHEN("third price fetched") {
-            auto const &p02 = bt::price_t(
+            auto const &p02 = bt::price_ts(
                 price_hist.begin(), price_hist.begin() + 3);
 
             REQUIRE(p02.back() == price_hist[2]);
@@ -50,7 +50,7 @@ SCENARIO("Specified weight allocation",
         }
 
         WHEN("last price fetched") {
-            auto const &p0N = bt::price_t(
+            auto const &p0N = bt::price_ts(
                 price_hist.begin(), price_hist.end());
 
             REQUIRE(p0N.back() == price_hist.back());
@@ -67,15 +67,15 @@ SCENARIO("Specified weight allocation",
 SCENARIO("Weights with some incorrect values are given",
         "[weight_alloc][asset_alloc]") {
     GIVEN("Price history and incorrect weights") {
-        bt::price_t const price_hist {
+        bt::price_ts const price_hist {
             500.0, 10.5, 1000.1, 850.5,  10};
-        bt::weight_t const weights {
+        bt::weight_ts const weights {
               0.2,  1.4,    150,  -8.5, 0.8};
 
         bt::weight_alloc w_alloc(weights);
 
         WHEN("price for an incorrect positive weight fetched") {
-            auto const &p01 = bt::price_t(
+            auto const &p01 = bt::price_ts(
                 price_hist.begin(), price_hist.begin() + 2);
 
             REQUIRE(p01.back() == price_hist[1]);
@@ -88,7 +88,7 @@ SCENARIO("Weights with some incorrect values are given",
         }
 
         WHEN("price for an incorrect negative weight fetched") {
-            auto const &p03 = bt::price_t(
+            auto const &p03 = bt::price_ts(
                 price_hist.begin(), price_hist.begin() + 4);
 
             REQUIRE(p03.back() == price_hist[3]);
@@ -105,10 +105,10 @@ SCENARIO("Weights with some incorrect values are given",
 SCENARIO("Weight allocation on randomized weights",
         "[weight_alloc][asset_alloc]") {
     GIVEN("Big history with various weights") {
-        bt::price_t const price_hist {
+        bt::price_ts const price_hist {
             100.0, 200.5,  10.5, 300.1, 32.5, 785.3, 43.5, 40.6,
               70.5, 143.4, 345.6, 42.5, 106.5};
-        bt::weight_t const weights {
+        bt::weight_ts const weights {
               0.2,   0.8,  -0.5,   0.7,  2.5,   1.0,  0.7, -1.0,
               -2.5,  -0.8,   0.9,  6.4,  0.5};
 
@@ -117,7 +117,7 @@ SCENARIO("Weight allocation on randomized weights",
         WHEN("i-th price fetched") {
             for (auto pT = price_hist.begin() + 1;
                  pT != price_hist.end(); ++pT) {
-                auto const &p0T = bt::price_t(price_hist.begin(), pT);
+                auto const &p0T = bt::price_ts(price_hist.begin(), pT);
 
                 bt::weight const wT = w_alloc.on_hist(p0T);
 

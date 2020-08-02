@@ -70,7 +70,7 @@ std::string str_rep(t_series<double> const &ts) {
     return rep.str();
 }
 
-std::string str_rep(price_t const &sT) {
+std::string str_rep(price_ts const &sT) {
     std::ostringstream ss;
     ss << '[';
     bool first = true;

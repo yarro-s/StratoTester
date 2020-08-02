@@ -30,5 +30,5 @@ std::string str_rep(balance_book const &book);
 
 std::string str_rep(t_series<double> const &ts);
 
-std::string str_rep(price_t const &sT);
+std::string str_rep(price_ts const &sT);
 }  // namespace bt

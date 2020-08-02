@@ -14,8 +14,8 @@
 
 int main() {
     bt::price const init_cash = 10000;
-    bt::price_t pT{150.5, 75.2, 125.3, 36.8,  305,  145,  8.5};
-    bt::weight_t wT{      0.24, 0.26,  0.82, 0.73, 0.61, 0.44};
+    bt::price_ts pT{150.5, 75.2, 125.3, 36.8,  305,  145,  8.5};
+    bt::weight_ts wT{      0.24, 0.26,  0.82, 0.73, 0.61, 0.44};
 
     bt::weight_alloc strat(wT);
     bt::single_asset back_test(strat, init_cash);
@@ -33,9 +33,9 @@ int main() {
 /*
 int main() {
     // auto const init_deposit = 10000;
-    // bt::price_t pT {
+    // bt::price_ts pT {
     //     110.5, 113.1, 29.0, 220.4, 535.2, 58.5, 100.0, 200.1, 6.2};
-    // // bt::weight_t wT {
+    // // bt::weight_ts wT {
     // //       0.2,   0.8,  0.3,   0.4,   0.7,  0.2,   0.1,   0.9, 0.1};
     // auto const w = 0.5;
 

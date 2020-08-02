@@ -17,8 +17,8 @@ namespace bt {
 
 class result {
  private:
-    weight_t wT;
-    price_t pvT;
+    weight_ts wT;
+    price_ts pvT;
 
  public:
     void reset() {
@@ -31,11 +31,11 @@ class result {
         pvT.push_back(book.mkt_value());
     }
 
-    weight_t const &wt() const {
+    weight_ts const &wt() const {
         return wT;
     }
 
-    price_t const &pv() const {
+    price_ts const &pv() const {
         return pvT;
     }
 

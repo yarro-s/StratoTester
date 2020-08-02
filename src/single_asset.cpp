@@ -42,11 +42,11 @@ single_asset &single_asset::update(price px, weight w) {
     return *this;
 }
 
-single_asset &single_asset::run(price_t const &pT) {
+single_asset &single_asset::run(price_ts const &pT) {
     reset();
     
     for (auto p = pT.begin(); p != pT.end(); ++p) {
-        auto const &roll_wnd = price_t(pT.begin(), p + 1);
+        auto const &roll_wnd = price_ts(pT.begin(), p + 1);
 
         book.mkt_price(*p);
         a_alloc.on_hist(roll_wnd);
