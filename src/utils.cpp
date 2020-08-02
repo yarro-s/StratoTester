@@ -14,7 +14,7 @@
 #define BT_N_TIME_STRLEN 20
 
 
-namespace bt {
+namespace st {
 
 std::time_t str_to_time(std::string const &time_str,
                         std::string const &time_fmt) {
@@ -84,4 +84,4 @@ std::string str_rep(prices const &sT) {
     ss << ']';
     return ss.str();
 }
-}  // namespace bt
+}  // namespace st

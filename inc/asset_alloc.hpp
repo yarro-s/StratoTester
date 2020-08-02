@@ -16,7 +16,7 @@
 #include <backtest.hpp>
 
 
-namespace bt {
+namespace st {
 
 class asset_alloc {
  private:
@@ -52,4 +52,4 @@ class asset_alloc {
 
     virtual ~asset_alloc() {}
 };
-}   // namespace bt
+}   // namespace st

@@ -10,7 +10,7 @@
 #include <allocators/chained_alloc.hpp>
 
 
-namespace bt {
+namespace st {
 
 class with_lookback : public chained_alloc {
  private:
@@ -40,4 +40,4 @@ class with_lookback : public chained_alloc {
     with_lookback(asset_alloc *next_alloc, size_t m_lookback)
         : chained_alloc(next_alloc), m_lookback(m_lookback) {}
 };
-}  // namespace bt
+}  // namespace st

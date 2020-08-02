@@ -22,7 +22,7 @@ TEST_CASE("Time series initialization", "[t_series]") {
     std::string const datapath = "../tests/data/";
     std::string const time_fmt = "%Y-%m-%d";
 
-    bt::t_series<bt::price> ts;
+    st::t_series<st::price> ts;
 
     struct tm timeinfo;
 
@@ -39,7 +39,7 @@ TEST_CASE("Time series initialization", "[t_series]") {
             index_name, field_name);
 
         std::string date;
-        bt::price px;
+        st::price px;
         // timeinfo = (const struct tm){0};
 
         while (in.read_row(date, px)) {
@@ -66,7 +66,7 @@ TEST_CASE("Time series initialization", "[t_series]") {
         std::vector<std::string> t_stamps{
             "01/01/10", "02/01/10", "03/01/10", "04/01/10",
             "05/01/10"};
-        bt::prices vals{10.5, 12.3, 11.9, 14.7, 15.4};
+        st::prices vals{10.5, 12.3, 11.9, 14.7, 15.4};
         std::string tckr("A");
 
         // timeinfo = (const struct tm){0};
@@ -99,7 +99,7 @@ TEST_CASE("Time series initialization", "[t_series]") {
                        "Date", "A", "T", "I");
 
         std::string date;
-        bt::price A, T, I;
+        st::price A, T, I;
         // timeinfo = (const struct tm){0};
 
         while (in.read_row(date, A, T, I)) {

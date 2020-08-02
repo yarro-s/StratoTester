@@ -10,7 +10,7 @@
 #include <asset_alloc.hpp>
 
 
-namespace bt {
+namespace st {
 
 class chained_alloc : public asset_alloc {
  private:
@@ -41,4 +41,4 @@ class chained_alloc : public asset_alloc {
     explicit chained_alloc(asset_alloc *alloc)
         : next_alloc(alloc) {}
 };
-}  // namespace bt
+}  // namespace st

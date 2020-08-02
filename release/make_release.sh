@@ -2,7 +2,7 @@
 
 HEADER=backtester_head.hpp
 SOURCE=backtester.cpp
-RELEASE=latest/backtester.hpp
+RELEASE=latest/StratoTester.hpp
 
 cat templates/$HEADER > ${HEADER}
 cat templates/$SOURCE > ${SOURCE}
@@ -21,7 +21,7 @@ g++ -P -E $SOURCE -o _backtester_prep.cpp
 cat inc/deps.hpp > $RELEASE
 cat _head_prep.hpp >> $RELEASE
 
-echo "#ifdef BACKTESTER_IMPL" >> $RELEASE
+echo "#ifdef STRATOTESTER_IMPL" >> $RELEASE
 cat _backtester_prep.cpp >> $RELEASE
 echo "#endif" >> $RELEASE
 

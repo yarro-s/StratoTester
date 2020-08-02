@@ -14,7 +14,7 @@
 #endif
 
 
-namespace bt {
+namespace st {
 using price = double;
 using weight = double;
 using volume = long long;
@@ -35,4 +35,4 @@ namespace tf {
     auto constexpr month = 30.42 * day;
     auto constexpr year = 52 * week;
 }  // namespace tf
-}  // namespace bt
+}  // namespace st

@@ -13,7 +13,7 @@
 
 #include <balance_book.hpp>
 
-namespace bt {
+namespace st {
 
 class result {
  private:
@@ -61,4 +61,4 @@ class timed_result : public result {
     timed_result(result res, time_frame tf)
         : result(res), t_frame(tf) {}
 };
-}  // namespace bt
+}  // namespace st

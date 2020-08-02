@@ -17,11 +17,11 @@
 
 SCENARIO("Results of transactions", "[result]") {
     GIVEN("Some money") {
-        bt::price const init_deposit = 20000;
-        bt::balance_book book(init_deposit);
-        bt::result res;
+        st::price const init_deposit = 20000;
+        st::balance_book book(init_deposit);
+        st::result res;
 
-        bt::price px = 0;
+        st::price px = 0;
         size_t amount = 0;
 
         WHEN("Some asset is bought") {
@@ -38,7 +38,7 @@ SCENARIO("Results of transactions", "[result]") {
             }
 
             THEN("the resulting weight is saved") {
-                bt::price const val = px * amount;
+                st::price const val = px * amount;
                 REQUIRE(res.wt().back() == val / init_deposit);
             }
 

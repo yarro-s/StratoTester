@@ -10,7 +10,7 @@
 #include <allocators/chained_alloc.hpp>
 
 
-namespace bt {
+namespace st {
 
 class with_rebalance : public chained_alloc {
  private:
@@ -34,4 +34,4 @@ class with_rebalance : public chained_alloc {
     with_rebalance(asset_alloc *next_alloc, size_t n_rebalance)
         : chained_alloc(next_alloc), n_rebalance(n_rebalance) {}
 };
-}  // namespace bt
+}  // namespace st

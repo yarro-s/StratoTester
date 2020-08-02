@@ -16,7 +16,7 @@
 #include <allocators/with_rebalance.hpp>
 
 
-namespace bt {
+namespace st {
 
 class strategy : public chained_alloc {
  private:
@@ -45,4 +45,4 @@ class strategy : public chained_alloc {
     explicit strategy(asset_alloc *alloc)
         : chained_alloc(alloc) {}
 };
-}  // namespace bt
+}  // namespace st

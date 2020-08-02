@@ -10,10 +10,10 @@
 #include <unit_defs.hpp>
 
 
-namespace bt {
+namespace st {
 class backtest {
  public:
     virtual backtest &update(price px, weight w) = 0;
     virtual backtest &run(prices const &pT) = 0;
 };
-}  // namespace bt
+}  // namespace st

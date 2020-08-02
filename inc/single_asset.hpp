@@ -13,7 +13,7 @@
 #include <result.hpp>
 
 
-namespace bt {
+namespace st {
 
 class single_asset : public backtest {
  private:
@@ -50,4 +50,4 @@ class single_asset : public backtest {
         a_alloc.set_model(this);
     }
 };
-}  // namespace bt
+}  // namespace st

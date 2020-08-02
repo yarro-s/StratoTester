@@ -18,7 +18,7 @@
 #include <unit_defs.hpp>
 
 
-namespace bt {
+namespace st {
 
 std::time_t str_to_time(std::string const &time_str,
                         std::string const &time_fmt = "%D");
@@ -31,4 +31,4 @@ std::string str_rep(balance_book const &book);
 std::string str_rep(t_series<double> const &ts);
 
 std::string str_rep(prices const &sT);
-}  // namespace bt
+}  // namespace st

@@ -25,7 +25,7 @@
 
 
 
-bt::t_series<bt::price> read_from_csv(
+st::t_series<st::price> read_from_csv(
     std::string const &datapath,
     std::string const &dataset_name,
     std::string const &index_name,
@@ -33,7 +33,7 @@ bt::t_series<bt::price> read_from_csv(
     std::string const &time_fmt = "%Y-%m-%d") {
 
 
-    bt::t_series<bt::price> ts;
+    st::t_series<st::price> ts;
 
     io::CSVReader<2, io::trim_chars<>>
         in(datapath + dataset_name + ".csv");
@@ -42,10 +42,10 @@ bt::t_series<bt::price> read_from_csv(
         index_name, field_name);
 
     std::string date;
-    bt::price px;
+    st::price px;
 
     while (in.read_row(date, px)) {
-        auto const t_stamp = bt::str_to_time(date, time_fmt);
+        auto const t_stamp = st::str_to_time(date, time_fmt);
 
         ts.append_at(dataset_name, t_stamp, px);
     }
@@ -60,10 +60,10 @@ TEST_CASE("Real data", "[usage]") {
 
     std::string const dataset_name("^IXIC");
 
-    bt::t_series<bt::price> ts(read_from_csv("../tests/data/",
+    st::t_series<st::price> ts(read_from_csv("../tests/data/",
             dataset_name, "Date", "Close", "%Y-%m-%d"));
 
-    // bt::price_t price_hist {
+    // st::price_t price_hist {
     //     116.5, 13.1, 9.2, 520.4, 12.2, 88.5, 100.0, 800.1, 3.2};
 
     SECTION("MA cross NDX") {
@@ -75,7 +75,7 @@ TEST_CASE("Real data", "[usage]") {
 
         double ema_long = 0.0, ema_short = 0.0;
 
-        auto const trading_rule = [&](bt::prices const &hist) {
+        auto const trading_rule = [&](st::prices const &hist) {
             ema_long = hist.back() * alpha_long
                 + ema_long * (1 - alpha_long);
             ema_short = hist.back() * alpha_short
@@ -85,12 +85,12 @@ TEST_CASE("Real data", "[usage]") {
             return signal;
         };
 
-        bt::lambda_alloc ma_cross(trading_rule);
-        auto strat = bt::strategy(&ma_cross)
+        st::lambda_alloc ma_cross(trading_rule);
+        auto strat = st::strategy(&ma_cross)
             .look_back(n_long)
             .rebalance_every(30);
 
-        bt::single_asset test(strat, 10000);
+        st::single_asset test(strat, 10000);
 
         auto const test_res = test
             .run(ts.vals_for(dataset_name))
@@ -101,16 +101,16 @@ TEST_CASE("Real data", "[usage]") {
                   << "TOTAL RET: " << test_res.growth() << std::endl;
 
         // std::cout << std::endl
-        //           << "HIST: " << bt::str_rep(price_hist) << std::endl;
+        //           << "HIST: " << st::str_rep(price_hist) << std::endl;
         // std::cout << std::endl
-        //           << "PV: " << bt::str_rep(test_res.pv()) << std::endl;
+        //           << "PV: " << st::str_rep(test_res.pv()) << std::endl;
         // std::cout << std::endl
-        //           << "W: " << bt::str_rep(test_res.wt()) << std::endl;
+        //           << "W: " << st::str_rep(test_res.wt()) << std::endl;
     }
 
     // SECTION("Buy and hold NDX") {
-    //     bt::const_alloc buy_and_hold(0.99);
-    //     bt::single_asset test(buy_and_hold, 10000);
+    //     st::const_alloc buy_and_hold(0.99);
+    //     st::single_asset test(buy_and_hold, 10000);
 
     //     auto const test_res = test
     //         .run(ts.vals_for(dataset_name))
@@ -123,22 +123,22 @@ TEST_CASE("Real data", "[usage]") {
 
 /*
 TEST_CASE("Some new feature", "[usage]") {
-    bt::price_t price_hist {
+    st::price_t price_hist {
         116.5, 13.1, 9.2, 520.4, 12.2, 88.5, 100.0, 800.1, 3.2};
 
     SECTION("A lookback period of M length") {
         size_t const m_lb = 3;
 
-        auto const test_rule = [](bt::price_t pt) {
+        auto const test_rule = [](st::price_t pt) {
             auto const pt_sum =
                 std::accumulate(pt.begin(), pt.end(),
                                 decltype(pt)::value_type(0));
             return pt_sum / 10000;
         };
-        auto alloc_rule = new bt::lambda_alloc(test_rule);
-        auto strat = bt::strategy(alloc_rule).look_back(m_lb);
+        auto alloc_rule = new st::lambda_alloc(test_rule);
+        auto strat = st::strategy(alloc_rule).look_back(m_lb);
 
-        bt::price_t const hist_slice(price_hist.begin(),
+        st::price_t const hist_slice(price_hist.begin(),
                                      price_hist.begin() + 2);
 
         auto const w = strat.on_hist(hist_slice);

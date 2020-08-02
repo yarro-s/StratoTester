@@ -15,7 +15,7 @@
 #include <unit_defs.hpp>
 
 
-namespace bt {
+namespace st {
 
 class const_alloc : public asset_alloc {
  private:
@@ -50,5 +50,5 @@ class const_alloc : public asset_alloc {
 
     ~const_alloc() {}
 };
-}   // namespace bt
+}   // namespace st
 

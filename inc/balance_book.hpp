@@ -14,7 +14,7 @@
 #include <unit_defs.hpp>
 
 
-namespace bt {
+namespace st {
 
 class balance_book {
  private:
@@ -86,4 +86,4 @@ class balance_book {
         cash_ -= vol;
     }
 };
-}  // namespace bt
+}  // namespace st

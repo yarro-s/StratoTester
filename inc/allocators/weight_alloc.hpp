@@ -14,7 +14,7 @@
 #include <asset_alloc.hpp>
 #include <utils.hpp>
 
-namespace bt {
+namespace st {
 
 class weight_alloc : public asset_alloc {
  private:
@@ -35,5 +35,5 @@ class weight_alloc : public asset_alloc {
 
     ~weight_alloc() {}
 };
-}   // namespace bt
+}   // namespace st
 

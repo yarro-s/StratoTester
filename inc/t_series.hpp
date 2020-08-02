@@ -16,7 +16,7 @@
 
 #include <unit_defs.hpp>
 
-namespace bt {
+namespace st {
 template <typename T>
 class t_series {
  protected:
@@ -55,4 +55,4 @@ class t_series {
         vals[tckr].push_back(val);
     }
 };
-}  // namespace bt
+}  // namespace st

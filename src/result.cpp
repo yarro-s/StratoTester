@@ -9,7 +9,7 @@
 #include <result.hpp>
 #endif
 
-namespace bt {
+namespace st {
 price result::max_drawdown() const {
     price max_dd = 0.0,
           gmax = 0.0,
@@ -29,4 +29,4 @@ price result::max_drawdown() const {
 
     return gmax == gmin ? 0.0 : -(gmax - gmin)/gmax;
 }
-}  // namespace bt
+}  // namespace st

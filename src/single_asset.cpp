@@ -13,7 +13,7 @@
 #endif
 
 
-namespace bt {
+namespace st {
 
 single_asset &single_asset::update(price px, weight w) {
     px = book.mkt_price();
@@ -54,4 +54,4 @@ single_asset &single_asset::run(prices const &pT) {
     }
     return *this;
 }
-}  // namespace bt
+}  // namespace st

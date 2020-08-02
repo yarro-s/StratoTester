@@ -14,10 +14,10 @@
 
 SCENARIO("Selling and buying in volatility", "[balance_book]") {
     GIVEN("Some money and assets") {
-        bt::price const init_deposit = 20000;
-        bt::balance_book book(init_deposit);
+        st::price const init_deposit = 20000;
+        st::balance_book book(init_deposit);
 
-        bt::price px = 750;
+        st::price px = 750;
         book.mkt_price(px);
 
         int const init_assets = 15;
@@ -27,7 +27,7 @@ SCENARIO("Selling and buying in volatility", "[balance_book]") {
 
         WHEN("Buy after price has gone down") {
             n_assets = 5;
-            bt::price new_px = 0.8 * px;
+            st::price new_px = 0.8 * px;
 
             auto const prev_cash = book.cash();
             auto const prev_assets = book.n_asset();
@@ -54,7 +54,7 @@ SCENARIO("Selling and buying in volatility", "[balance_book]") {
 
         WHEN("Sell after price has gone up") {
             n_assets = 5;
-            bt::price new_px = 1.2 * px;
+            st::price new_px = 1.2 * px;
 
             auto const prev_cash = book.cash();
             auto const prev_assets = book.n_asset();
@@ -83,10 +83,10 @@ SCENARIO("Selling and buying in volatility", "[balance_book]") {
 
 SCENARIO("Market price volatility", "[balance_book]") {
     GIVEN("Some money and assets") {
-        bt::price const init_deposit = 20000;
-        bt::balance_book book(init_deposit);
+        st::price const init_deposit = 20000;
+        st::balance_book book(init_deposit);
 
-        bt::price px = 750;
+        st::price px = 750;
         book.mkt_price(px);
 
         int const init_assets = 15;
@@ -148,8 +148,8 @@ SCENARIO("Market price volatility", "[balance_book]") {
 
 SCENARIO("Buying assets", "[balance_book]") {
     GIVEN("No money and no assets") {
-        bt::price const init_deposit = 0;
-        bt::balance_book book(init_deposit);
+        st::price const init_deposit = 0;
+        st::balance_book book(init_deposit);
 
         int n_asset = 0;
 
@@ -190,8 +190,8 @@ SCENARIO("Buying assets", "[balance_book]") {
     }
 
     GIVEN("Some money and no assets") {
-        bt::price const init_deposit = 10000;
-        bt::balance_book book(init_deposit);
+        st::price const init_deposit = 10000;
+        st::balance_book book(init_deposit);
 
         int n_asset = 0;
 
@@ -213,7 +213,7 @@ SCENARIO("Buying assets", "[balance_book]") {
         }
 
         WHEN("buying a small amount relative to the deposit") {
-            bt::price px = 100;
+            st::price px = 100;
 
             book.mkt_price(px);
             n_asset = 3;
@@ -235,7 +235,7 @@ SCENARIO("Buying assets", "[balance_book]") {
         /// TODO: also add boundary checks
 
         WHEN("buying an amount with value equal to the deposit") {
-            bt::price px = 100;
+            st::price px = 100;
 
             book.mkt_price(px);
             n_asset = init_deposit / px;
@@ -255,7 +255,7 @@ SCENARIO("Buying assets", "[balance_book]") {
         }
 
         WHEN("trying to buy more than affordable") {
-            bt::price px = 150;
+            st::price px = 150;
 
             book.mkt_price(px);
             n_asset = (init_deposit / px) * 3;
@@ -272,10 +272,10 @@ SCENARIO("Buying assets", "[balance_book]") {
     }
 
     GIVEN("Some money and assets") {
-        bt::price const init_deposit = 10000;
-        bt::balance_book book(init_deposit);
+        st::price const init_deposit = 10000;
+        st::balance_book book(init_deposit);
 
-        bt::price px = 150;
+        st::price px = 150;
         book.mkt_price(px);
 
         int const init_assets = 20;
@@ -306,7 +306,7 @@ SCENARIO("Buying assets", "[balance_book]") {
 SCENARIO("Selling assets", "[balance_book]") {
     GIVEN("No money and no assets") {
         auto const init_deposit = 0.0;
-        bt::balance_book book(init_deposit);
+        st::balance_book book(init_deposit);
 
         int n_asset = 0;
 
@@ -330,7 +330,7 @@ SCENARIO("Selling assets", "[balance_book]") {
 
     GIVEN("Some money and no assets") {
         auto const init_deposit = 1000.0;
-        bt::balance_book book(init_deposit);
+        st::balance_book book(init_deposit);
 
         int n_asset = 0;
 
@@ -393,10 +393,10 @@ SCENARIO("Selling assets", "[balance_book]") {
     }
 
     GIVEN("Some money and assets") {
-        bt::price const init_deposit = 10000;
-        bt::balance_book book(init_deposit);
+        st::price const init_deposit = 10000;
+        st::balance_book book(init_deposit);
 
-        bt::price px = 250;
+        st::price px = 250;
         book.mkt_price(px);
 
         int const init_assets = 10;

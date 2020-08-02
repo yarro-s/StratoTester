@@ -13,7 +13,7 @@
 
 #include <asset_alloc.hpp>
 
-namespace bt {
+namespace st {
 using algo_lambda =
     std::function<weight(prices const &)>;
 
@@ -33,4 +33,4 @@ class lambda_alloc : public asset_alloc {
 
     explicit lambda_alloc(algo_lambda fa) : fa(fa) {}
 };
-}  // namespace bt
+}  // namespace st
