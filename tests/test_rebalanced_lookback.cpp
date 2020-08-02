@@ -15,10 +15,10 @@
 #include <catch2/catch.hpp>
 
 SCENARIO("Rebalancing with lookback", "[rebalace][lookback]") {
-    bt::price_ts price_hist {
+    bt::prices price_hist {
         6.5, 253.1, 39.2, 1.4, 555.0, 8.3, 200.0, 9.2, 855.3};
 
-    auto const test_rule = [](bt::price_ts pt) {
+    auto const test_rule = [](bt::prices pt) {
         auto const pt_sum =
             std::accumulate(pt.begin(), pt.end(),
                             decltype(pt)::value_type(0));
@@ -34,7 +34,7 @@ SCENARIO("Rebalancing with lookback", "[rebalace][lookback]") {
             .rebalance_every(n_rb).look_back(m_lb);
 
         WHEN("history is less then the rebalancing period") {
-            bt::price_ts const hist_slice(price_hist.begin(),
+            bt::prices const hist_slice(price_hist.begin(),
                                      price_hist.begin() + n_rb - 1);
 
             THEN("no rebalancing is triggered") {
@@ -46,7 +46,7 @@ SCENARIO("Rebalancing with lookback", "[rebalace][lookback]") {
 
         WHEN("history length is equal to the rebalancing period") {
             auto const idxT = n_rb;
-            bt::price_ts const hist_slice(price_hist.begin(),
+            bt::prices const hist_slice(price_hist.begin(),
                                          price_hist.begin() + idxT);
 
             THEN("rebalancing is triggered") {
@@ -59,7 +59,7 @@ SCENARIO("Rebalancing with lookback", "[rebalace][lookback]") {
         }
 
         WHEN("history is longer then the rebalancing period") {
-            bt::price_ts const hist_slice(price_hist.begin(),
+            bt::prices const hist_slice(price_hist.begin(),
                 price_hist.begin() + n_rb + 1);
 
             THEN("rebalancing is not triggered") {
@@ -71,7 +71,7 @@ SCENARIO("Rebalancing with lookback", "[rebalace][lookback]") {
 
         WHEN("history len is a multiple of the rebalancing period") {
             auto const idxT = 2 * n_rb;
-            bt::price_ts const hist_slice(price_hist.begin(),
+            bt::prices const hist_slice(price_hist.begin(),
                 price_hist.begin() + idxT);
 
             THEN("rebalancing is triggered") {
@@ -85,7 +85,7 @@ SCENARIO("Rebalancing with lookback", "[rebalace][lookback]") {
 
         WHEN("history is not a multiple of the rebalancing period") {
             auto const idxT = 2 * n_rb + 2;
-            bt::price_ts const hist_slice(price_hist.begin(),
+            bt::prices const hist_slice(price_hist.begin(),
                 price_hist.begin() + idxT);
 
             THEN("rebalancing is triggered") {

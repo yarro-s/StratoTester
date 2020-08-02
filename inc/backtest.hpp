@@ -14,6 +14,6 @@ namespace bt {
 class backtest {
  public:
     virtual backtest &update(price px, weight w) = 0;
-    virtual backtest &run(price_ts const &pT) = 0;
+    virtual backtest &run(prices const &pT) = 0;
 };
 }  // namespace bt

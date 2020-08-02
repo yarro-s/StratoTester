@@ -75,7 +75,7 @@ TEST_CASE("Real data", "[usage]") {
 
         double ema_long = 0.0, ema_short = 0.0;
 
-        auto const trading_rule = [&](bt::price_ts const &hist) {
+        auto const trading_rule = [&](bt::prices const &hist) {
             ema_long = hist.back() * alpha_long
                 + ema_long * (1 - alpha_long);
             ema_short = hist.back() * alpha_short

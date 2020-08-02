@@ -66,7 +66,7 @@ TEST_CASE("Real-world data showcase", "[usage]") {
 
 
 TEST_CASE("Basic usage showcases", "[usage]") {
-    bt::price_ts price_hist {110.5, 113.1, 29.0, 220.4, 565.3, 42.0};
+    bt::prices price_hist {110.5, 113.1, 29.0, 220.4, 565.3, 42.0};
 
     SECTION("backtester.hpp is built correctly") {
         auto const init_deposit = 1000;

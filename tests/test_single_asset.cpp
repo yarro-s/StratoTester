@@ -21,8 +21,8 @@ TEST_CASE("Changing portfolio", "[single_asset][result]") {
 
     SECTION("Arbitrary weights") {
         bt::price const init_cash = 10000;
-        bt::price_ts pT{ 75.2, 125.3, 36.8,  305,  145,  8.5, 45.3};
-        bt::weight_ts wT{0.24,  0.26, 0.52, 0.73, 0.61, 0.44, 0.79};
+        bt::prices pT{ 75.2, 125.3, 36.8,  305,  145,  8.5, 45.3};
+        bt::weights wT{0.24,  0.26, 0.52, 0.73, 0.61, 0.44, 0.79};
 
         bt::weight_alloc strat(wT);
         bt::single_asset back_test(strat, init_cash);
@@ -36,8 +36,8 @@ TEST_CASE("Changing portfolio", "[single_asset][result]") {
     }
 
     SECTION("Changing weight and asset price") {
-        bt::price_ts pT{ 150, 180, 250};
-        bt::weight_ts wT{0.7, 0.8, 0.5};
+        bt::prices pT{ 150, 180, 250};
+        bt::weights wT{0.7, 0.8, 0.5};
 
         bt::weight_alloc strat(wT);
         bt::single_asset back_test(strat, init_deposit);
@@ -59,7 +59,7 @@ TEST_CASE("Buy and hold portfolio", "[single_asset][result]") {
     bt::price const init_deposit = 10000;
 
     SECTION("Constant weight, growing price") {
-        bt::price_ts pT{  150, 180, 250, 300, 410};
+        bt::prices pT{  150, 180, 250, 300, 410};
         bt::weight w = 0.7;
 
         bt::const_alloc strat(w);
@@ -78,8 +78,8 @@ TEST_CASE("Buy and hold portfolio", "[single_asset][result]") {
     }
 
     SECTION("Constant price, constant weight") {
-        bt::price_ts pT{  150, 150, 150};
-        bt::weight_ts wT {0.7, 0.7, 0.7};
+        bt::prices pT{  150, 150, 150};
+        bt::weights wT {0.7, 0.7, 0.7};
 
         bt::weight_alloc strat(wT);
         bt::single_asset back_test(strat, init_deposit);

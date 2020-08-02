@@ -17,7 +17,7 @@ class with_rebalance : public chained_alloc {
     size_t n_rebalance;
 
  public:
-    weight on_hist(price_ts const &price_hist) override {
+    weight on_hist(prices const &price_hist) override {
         weight wT = algo(price_hist);
 
         if (!(price_hist.size() % n_rebalance)) {

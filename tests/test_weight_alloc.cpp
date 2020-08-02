@@ -16,9 +16,9 @@
 SCENARIO("Specified weight allocation",
          "[weight_alloc][asset_alloc]") {
     GIVEN("Price history with corresponding weights") {
-        bt::price_ts const price_hist {
+        bt::prices const price_hist {
             100.0, 200.5,  10.5, 300.1};
-        bt::weight_ts const weights {
+        bt::weights const weights {
               0.2,   0.8,  -0.5,   0.7};
 
         bt::weight_alloc w_alloc(weights);
@@ -67,9 +67,9 @@ SCENARIO("Specified weight allocation",
 SCENARIO("Weights with some incorrect values are given",
         "[weight_alloc][asset_alloc]") {
     GIVEN("Price history and incorrect weights") {
-        bt::price_ts const price_hist {
+        bt::prices const price_hist {
             500.0, 10.5, 1000.1, 850.5,  10};
-        bt::weight_ts const weights {
+        bt::weights const weights {
               0.2,  1.4,    150,  -8.5, 0.8};
 
         bt::weight_alloc w_alloc(weights);
@@ -105,10 +105,10 @@ SCENARIO("Weights with some incorrect values are given",
 SCENARIO("Weight allocation on randomized weights",
         "[weight_alloc][asset_alloc]") {
     GIVEN("Big history with various weights") {
-        bt::price_ts const price_hist {
+        bt::prices const price_hist {
             100.0, 200.5,  10.5, 300.1, 32.5, 785.3, 43.5, 40.6,
               70.5, 143.4, 345.6, 42.5, 106.5};
-        bt::weight_ts const weights {
+        bt::weights const weights {
               0.2,   0.8,  -0.5,   0.7,  2.5,   1.0,  0.7, -1.0,
               -2.5,  -0.8,   0.9,  6.4,  0.5};
 

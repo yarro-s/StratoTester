@@ -23,7 +23,7 @@ class asset_alloc {
     backtest *model = nullptr;
 
  protected:
-    virtual weight algo(price_ts const &price_hist) = 0;
+    virtual weight algo(prices const &price_hist) = 0;
 
     // TODO(yarrik): convert to vararg
     backtest &upd_model(price px, weight w) {
@@ -39,7 +39,7 @@ class asset_alloc {
         return *this;
     }
 
-    virtual weight on_hist(price_ts const &price_hist) {
+    virtual weight on_hist(prices const &price_hist) {
         auto w = algo(price_hist);
 
         // clamp to 0...1

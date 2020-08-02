@@ -66,7 +66,7 @@ TEST_CASE("Time series initialization", "[t_series]") {
         std::vector<std::string> t_stamps{
             "01/01/10", "02/01/10", "03/01/10", "04/01/10",
             "05/01/10"};
-        bt::price_ts vals{10.5, 12.3, 11.9, 14.7, 15.4};
+        bt::prices vals{10.5, 12.3, 11.9, 14.7, 15.4};
         std::string tckr("A");
 
         // timeinfo = (const struct tm){0};

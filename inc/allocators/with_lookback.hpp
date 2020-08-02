@@ -17,15 +17,15 @@ class with_lookback : public chained_alloc {
     size_t m_lookback;
 
  protected:
-    weight algo(price_ts const &price_hist) override {
+    weight algo(prices const &price_hist) override {
         auto const t0 = price_hist.end() - m_lookback;
         auto const t_now = price_hist.end();
 
-        return chained_alloc::algo(price_ts(t0, t_now));
+        return chained_alloc::algo(prices(t0, t_now));
     }
 
  public:
-    weight on_hist(price_ts const &price_hist) override {
+    weight on_hist(prices const &price_hist) override {
         auto const len_passed = price_hist.size();
         weight wT = 0.0;
 

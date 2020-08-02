@@ -42,7 +42,7 @@ single_asset &single_asset::update(price px, weight w) {
     return *this;
 }
 
-single_asset &single_asset::run(price_ts const &pT) {
+single_asset &single_asset::run(prices const &pT) {
     reset();
     
     for (auto p = pT.begin(); p != pT.end(); ++p) {

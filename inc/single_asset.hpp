@@ -39,7 +39,7 @@ class single_asset : public backtest {
     }
 
     single_asset &update(price px, weight w);
-    single_asset &run(price_ts const &pT);
+    single_asset &run(prices const &pT);
 
     explicit single_asset(asset_alloc &a_alloc)
         : single_asset(a_alloc, 1.0e12) {}
