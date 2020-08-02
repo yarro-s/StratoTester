@@ -20,32 +20,29 @@ auto qqq_hist = st::prices
         191.10, 187.47, 188.81, 197.08, 205.10, 212.61};
 ```
 
-Let's implement a simple momentum indicator. Here, ```lambda_alloc``` is an allocator wrapper around a lambda function, which returns the weight of QQQ in our portfolio based on its recent price history 
+Let's implement a simple momentum trading rule 
 
 ```C++
-auto last_month_up = lambda_alloc([&](prices const &price_hist) {
-    auto const last_month = price_hist.back();
-    auto const first_month = price_hist.front();
+auto last_close_up = [&](prices const &price_hist) {
+        auto const last_close = price_hist.back();
+        auto const first_close = price_hist.front();
 
-    auto signal = last_month > first_month ? 1.0 : 0.0;
-    std::cout << "   -> "    // logging the input and output
-            << first_month << " <> " << last_month
-            << " => SIG = " << signal << std::endl;
-    return signal;
-});
+        // buy when last close is higer than the first, hold otherwise
+        return last_close > first_close ? 1.0 : 0.0;
+};
 ```
 
-Next, let's create a strategy based on the allocator
+Next, let's create a strategy based on the rule
 
 ```C++
-auto strat = strategy(&last_month_up)
-            .look_back(3)           // 3 samples rolling window
-            .rebalance_every(2);    // rebanace every 2 months
+auto strat = strategy::with(last_close_up)
+                .look_back(3)         // 3 samples rolling window
+                .rebalance_every(2);  // rebanace every 2 samples
 ```
 
-We specified a 3 samples rolling window with ```look_back(3)``` with the asset rebalancing done every 2 samples. Here, the samples hold the monthly closing price of QQQ.
+We specified a 3 sample rolling window with ```look_back(3)``` with the asset rebalancing done every 2 samples. The samples hold the monthly closing prices of QQQ.
 
-Let's run this strategy with some money
+Let's run this strategy with an initial deposit of $10000
 
 ```C++
 auto init_deposit = 10000;
