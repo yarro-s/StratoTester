@@ -1,3 +1,3 @@
 # StratoTester
 
-Hello!
+Hello, World!
