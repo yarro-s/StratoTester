@@ -21,21 +21,21 @@ TEST_CASE("Docs tests", "[usage]") {
          191.10, 187.47, 188.81, 197.08, 205.10, 212.61};
 
     SECTION("Simple momentum indicator") {
-        auto last_month_up = lambda_alloc([&](prices const &price_hist) {
+        auto last_month_up = [&](prices const &price_hist) {
             // i.e. price_hist @ step 5 = [179.66, 189.54, 173.95]
             auto const last_month = price_hist.back();
             auto const first_month = price_hist.front();
 
            auto signal = last_month > first_month ? 1.0 : 0.0;
-           std::cout << "   -> "    // logging the input and output
-                    << first_month << " <> " << last_month
-                    << " => SIG = " << signal << std::endl;
+        //    std::cout << "   -> "    // logging the input and output
+        //             << first_month << " <> " << last_month
+        //             << " => SIG = " << signal << std::endl;
            return signal;
-        });
+        };
 
-        auto strat = strategy(&last_month_up)
-            .look_back(3)           // 3 month rolling window
-            .rebalance_every(2);    // rebanace every 2 months
+        auto strat = strategy::with(last_month_up)
+                         .look_back(3)         // 3 month rolling window
+                         .rebalance_every(2);  // rebanace every 2 months
 
         auto init_deposit = 10000;
         auto test = st::single_asset(strat, init_deposit).run(qqq_hist);
