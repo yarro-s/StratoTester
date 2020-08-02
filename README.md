@@ -5,7 +5,7 @@ Strategy Tester is a C++ header-only library for testing trading and investing s
 ## Quick Start
 Include [StratoTester.hpp](https://github.com/yarro-s/StratoTester/tree/master/release/latest) as follows
 
-```
+```C++
 #define STRATOTESTER_IMPL  // specified only once 
 #include <StratoTester.hpp>
 
@@ -14,7 +14,7 @@ using namespace st;  // for convenience
 
 Here are some QQQ monthly quotes, starting from Jan 01, 2019 ending Dec 01, 2019
 
-```
+```C++
 auto qqq_hist = st::prices
     {168.16, 173.19, 179.66, 189.54, 173.95, 186.74,
         191.10, 187.47, 188.81, 197.08, 205.10, 212.61};
@@ -22,7 +22,7 @@ auto qqq_hist = st::prices
 
 Let's implement a simple momentum indicator. Here, ```lambda_alloc``` is an allocator wrapper around a lambda function, which returns the weight of QQQ in our portfolio based on its recent price history 
 
-```
+```C++
 auto last_month_up = lambda_alloc([&](prices const &price_hist) {
     auto const last_month = price_hist.back();
     auto const first_month = price_hist.front();
@@ -37,7 +37,7 @@ auto last_month_up = lambda_alloc([&](prices const &price_hist) {
 
 Next, let's create a strategy based on the allocator
 
-```
+```C++
 auto strat = strategy(&last_month_up)
             .look_back(3)           // 3 samples rolling window
             .rebalance_every(2);    // rebanace every 2 months
@@ -47,14 +47,14 @@ We specified a 3 samples rolling window with ```look_back(3)``` with the asset r
 
 Let's run this strategy with some money
 
-```
+```C++
 auto init_deposit = 10000;
 auto test = st::single_asset(strat, init_deposit).run(qqq_hist);
 ```
 
 and log some of the results
 
-```
+```C++
 std::cout << std::endl <<
         "Single asset portfolio value history: " << std::endl <<
         "   " <<
