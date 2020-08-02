@@ -31,7 +31,7 @@ auto last_close_up = [=](prices const &price_hist) {
 };
 ```
 
-A trading rule takes a rolling price history and calculates ```weight``` in the range from ```-1.0``` to ```1.0```. For instance, returning ```0.5``` means that the currently required share  of the asset in the portfolio is 50% while returning ```-0.2``` means that 20% of the portfolio is used for shorting the asset.
+A trading rule takes a rolling price history (represented internally as an ```std::vector<double>```) and calculates ```weight``` in the range from ```-1.0``` to ```1.0```. For instance, returning ```0.5``` means that the currently required share  of the asset in the portfolio is 50% while returning ```-0.2``` means that 20% of the portfolio is used for shorting the asset.
 
 Next, let's create a strategy based on that rule
 
@@ -47,7 +47,7 @@ Let's run this strategy with an initial deposit of $10000
 
 ```C++
 auto init_deposit = 10000;
-auto test = st::single_asset(strat, init_deposit).run(qqq_hist);
+auto test = single_asset(strat, init_deposit).run(qqq_hist);
 ```
 
 and log some of the results
